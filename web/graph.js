@@ -4,7 +4,9 @@ export function mountGraph(data){
  let zoom=1,pan={x:0,y:0},drag=null,moved=false;
  const shorten=s=>s.replace('Matériel et infrastructure','Infrastructure').replace('Informatique et réseaux','Informatique / réseau').replace('Modèles et architectures','Modèles').replace('Entraînement et adaptation','Adaptation').replace('Production et exploitation','Production').replace('Sécurité et gouvernance','Sécurité').replace('Agents et intégrations','Agents / intégration').replace('Évaluation et fiabilité','Évaluation');
  const positions=new Map();
+ svg.classList.toggle('compact-labels',data.lessons.length>18);
  const lessonLabels={'systeme':'Système IA','llm':'LLM','workflow':'Workflow / agent','harness':'Harness','mcp':'MCP','evaluation':'Évaluation','api':'API de modèle','materiel':'CPU / GPU','memoire':'Mémoire / quantification','outils':'Appels d’outils','rag-doc':'RAG documentaire','graphe':'Graphe de données','confidentialite':'Confidentialité','choix-modele':'Choix du modèle'};
+ Object.assign(lessonLabels,{'vecteurs':'Vecteurs / matrices','apprentissage':'Apprentissage','transformer':'Transformer','moe':'MoE','jepa':'JEPA','lora':'Fine-tuning / LoRA','docker':'Docker','extensions':'Skills / plugins','audit':'Audit de processus','observabilite':'Observabilité'});
  const label=n=>{const p=positions.get(n.id),side=n.type==='lesson'?(p.x>500?1:p.x<460?-1:0):0;return `<text x="${side*14}" y="${n.type==='lesson'?(side?4:(p.y<320?-17:27)):27}" text-anchor="${side>0?'start':side<0?'end':'middle'}">${esc(lessonLabels[n.id]||shorten(n.title))}</text>`;};
  data.domains.forEach((d,i)=>{const a=(i/data.domains.length)*Math.PI*2-Math.PI/2;positions.set(d.id,{x:480+345*Math.cos(a),y:320+245*Math.sin(a)});});
  data.lessons.forEach((l,i)=>{const a=(i/data.lessons.length)*Math.PI*2-Math.PI/2;positions.set(l.id,{x:480+150*Math.cos(a),y:320+125*Math.sin(a)});});

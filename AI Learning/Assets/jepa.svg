@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 650" role="img" aria-labelledby="title desc">
+<title id="title">I-JEPA : prédire des représentations cibles</title><desc id="desc">À gauche, le contexte visible est traité par un encodeur puis un prédicteur. À droite, un encodeur cible traite l'image et fournit les représentations des régions cibles. La perte compare prédiction et cible. La branche cible n'est pas mise à jour par rétropropagation directe ; elle suit une moyenne mobile de l'encodeur de contexte.</desc>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#28614c"/></marker></defs>
+<rect width="900" height="650" rx="18" fill="#f5f5ed"/>
+<g font-family="system-ui,sans-serif" fill="#183c33"><text x="30" y="40" font-size="22" font-weight="bold">I-JEPA : comparer dans l’espace latent</text>
+<g fill="#fff" stroke="#b5c4b7"><rect x="45" y="90" width="350" height="70" rx="12"/><rect x="505" y="90" width="350" height="70" rx="12"/><rect x="45" y="215" width="350" height="85" rx="12"/><rect x="505" y="215" width="350" height="85" rx="12"/><rect x="45" y="365" width="350" height="90" rx="12"/><rect x="505" y="365" width="350" height="90" rx="12"/></g>
+<rect x="255" y="515" width="390" height="65" rx="12" fill="#183c33"/>
+<g text-anchor="middle"><g font-size="21"><text x="220" y="133">Contexte visible</text><text x="680" y="133">Image pour la branche cible</text><text x="220" y="252">Encodeur de contexte</text><text x="680" y="252">Encodeur cible</text><text x="220" y="403">Prédicteur</text><text x="680" y="403">Représentations cibles</text><text x="450" y="555" fill="#fff">Perte : prédiction contre cible</text></g><g font-size="15"><text x="220" y="280">Paramètres entraînés</text><text x="680" y="280">Pas de gradient direct vers ses poids</text><text x="220" y="434">Avec positions des régions à prédire</text><text x="680" y="434">Sélection des régions visées</text></g></g>
+<g fill="none" stroke="#28614c" stroke-width="2.5" marker-end="url(#a)"><path d="M220 160V215"/><path d="M680 160V215"/><path d="M220 300V365"/><path d="M680 300V365"/><path d="M220 455V548H255"/><path d="M680 455V548H645"/></g>
+<text x="30" y="615" font-size="15">La branche cible suit une moyenne mobile des poids de l’encodeur de contexte.</text>
+<text x="30" y="638" font-size="15">La cible est une représentation apprise, pas une image à reconstruire pixel par pixel.</text>
+</g></svg>

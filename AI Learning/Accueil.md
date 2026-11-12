@@ -23,3 +23,16 @@ Les QCM et le suivi de progression sont disponibles dans l'application web. Les 
 - [[Quand utiliser un graphe de données]]
 - [[Déployer une IA avec des données confidentielles]]
 - [[Choisir un modèle par la mesure]]
+
+## Modèles, apprentissage et métier
+
+- [[Vecteurs matrices et similarité]]
+- [[Apprentissage gradients et surapprentissage]]
+- [[Comprendre le Transformer et son attention]]
+- [[Comprendre les modèles MoE]]
+- [[Comprendre JEPA et la prédiction de représentations]]
+- [[Fine-tuning et adaptation avec LoRA]]
+- [[Docker images conteneurs et services IA]]
+- [[Distinguer outils MCP skills et plugins]]
+- [[Auditer un processus avant de proposer une IA]]
+- [[Observer et diagnostiquer une application IA]]

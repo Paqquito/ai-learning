@@ -1,6 +1,6 @@
 {
-  "id": "fondations-v2",
-  "title": "Intégration, infrastructure et données",
+  "id": "fondations-v3",
+  "title": "Fondations des modèles et des systèmes IA",
   "lessonIds": [
     "systeme",
     "llm",
@@ -15,7 +15,17 @@
     "rag-doc",
     "graphe",
     "confidentialite",
-    "choix-modele"
+    "choix-modele",
+    "vecteurs",
+    "apprentissage",
+    "transformer",
+    "moe",
+    "jepa",
+    "lora",
+    "docker",
+    "extensions",
+    "audit",
+    "observabilite"
   ],
   "questions": [
     {
@@ -241,6 +251,166 @@
         "L’absence d’erreur observée ne démontre pas une absence de risque."
       ],
       "lessonId": "choix-modele"
+    },
+    {
+      "id": "q15",
+      "prompt": "Quel est le cosinus entre les vecteurs non nuls (1, 0) et (2, 0) ?",
+      "options": [
+        "0, car leurs longueurs diffèrent",
+        "1, car leurs directions sont identiques",
+        "2, car le second est deux fois plus long"
+      ],
+      "answer": 1,
+      "explanations": [
+        "Le cosinus normalise les longueurs ; ces vecteurs ne sont pas orthogonaux.",
+        "Le produit scalaire vaut 2 et le produit des normes vaut 2, donc le rapport vaut 1.",
+        "Le cosinus de vecteurs réels non nuls reste entre -1 et 1."
+      ],
+      "lessonId": "vecteurs"
+    },
+    {
+      "id": "q16",
+      "prompt": "Les reformulations d’un même ticket sont réparties entre entraînement et test. Quel risque faut-il traiter ?",
+      "options": [
+        "Une fuite entre ensembles qui surestime la généralisation",
+        "Un manque automatique de VRAM",
+        "Une impossibilité d’entraîner tout modèle"
+      ],
+      "answer": 0,
+      "explanations": [
+        "Des variantes proches d’un cas vu peuvent rendre le test artificiellement facile. Regrouper les variantes avant la séparation.",
+        "Le problème décrit concerne le protocole de données, pas directement la mémoire GPU.",
+        "On peut entraîner un modèle, mais il faut corriger le protocole avant de croire le score."
+      ],
+      "lessonId": "apprentissage"
+    },
+    {
+      "id": "q17",
+      "prompt": "Dans un décodeur à attention causale, quels tokens l’état sur C peut-il consulter dans A, B, C, D ?",
+      "options": [
+        "Uniquement D",
+        "Tous, sans restriction",
+        "A, B et C"
+      ],
+      "answer": 2,
+      "explanations": [
+        "D est précisément une position future masquée dans cet exemple.",
+        "L’accès au futur ferait fuiter la cible lors de l’apprentissage autoregressif.",
+        "Le masque causal autorise les positions antérieures et la position courante."
+      ],
+      "lessonId": "transformer"
+    },
+    {
+      "id": "q18",
+      "prompt": "Un MoE choisit deux experts par token. Que peut-on en conclure ?",
+      "options": [
+        "Il suffit toujours de stocker deux experts",
+        "Le calcul est parcimonieux, mais les autres experts susceptibles d’être choisis doivent rester accessibles",
+        "Chaque expert est un agent doté de ses propres outils"
+      ],
+      "answer": 1,
+      "explanations": [
+        "La sélection peut changer d’un token à l’autre ; mémoire et paramètres actifs sont distincts.",
+        "Les poids totaux, les transferts et les composants partagés restent à prendre en compte.",
+        "Un expert MoE est un sous-réseau interne, pas un agent applicatif."
+      ],
+      "lessonId": "moe"
+    },
+    {
+      "id": "q19",
+      "prompt": "Dans I-JEPA, que le prédicteur cherche-t-il principalement à retrouver ?",
+      "options": [
+        "Les représentations de régions cibles",
+        "Un rapport rédigé en langage naturel",
+        "Nécessairement tous les pixels manquants"
+      ],
+      "answer": 0,
+      "explanations": [
+        "La prédiction et la cible sont comparées dans un espace de représentations.",
+        "Une sortie textuelle demanderait des composants et un objectif adaptés.",
+        "I-JEPA se distingue ici d’un objectif de reconstruction directe des pixels."
+      ],
+      "lessonId": "jepa"
+    },
+    {
+      "id": "q20",
+      "prompt": "Que réduit LoRA dans sa forme habituelle ?",
+      "options": [
+        "La taille du contexte à zéro",
+        "Le nombre d’utilisateurs autorisés",
+        "Le nombre de paramètres à entraîner, en gardant la base gelée"
+      ],
+      "answer": 2,
+      "explanations": [
+        "LoRA est une méthode d’adaptation des poids, pas une suppression du contexte.",
+        "Les autorisations relèvent de l’application et des services.",
+        "Les adaptateurs sont entraînés ; la base, les activations et les autres besoins mémoire restent présents."
+      ],
+      "lessonId": "lora"
+    },
+    {
+      "id": "q21",
+      "prompt": "Depuis un conteneur backend, localhost désigne normalement quoi ?",
+      "options": [
+        "Le conteneur d’index voisin",
+        "Le propre environnement réseau du backend",
+        "Tous les services du réseau Docker"
+      ],
+      "answer": 1,
+      "explanations": [
+        "Un voisin doit être joint via son adresse ou nom de service approprié.",
+        "Sauf configurations réseau particulières, la boucle locale est celle de ce conteneur.",
+        "Localhost n’est pas un mécanisme de découverte de tous les services."
+      ],
+      "lessonId": "docker"
+    },
+    {
+      "id": "q22",
+      "prompt": "Une procédure de skill indique de lire un dossier interdit à l’utilisateur. Quel effet a cette instruction sur ses droits ?",
+      "options": [
+        "Aucun : les contrôles d’accès doivent toujours être appliqués",
+        "Elle donne automatiquement les droits manquants",
+        "Elle transforme le dossier en données publiques"
+      ],
+      "answer": 0,
+      "explanations": [
+        "Les instructions ne confèrent pas de permissions ; les services doivent contrôler l’accès.",
+        "Décrire une opération ne l’autorise pas.",
+        "La confidentialité d’une donnée ne change pas parce qu’une procédure la mentionne."
+      ],
+      "lessonId": "extensions"
+    },
+    {
+      "id": "q23",
+      "prompt": "120 dossiers passent de 90 à 40 secondes de travail, avec 20 minutes de suivi quotidien en plus. Quel gain net de temps actif est estimé ?",
+      "options": [
+        "180 minutes par jour",
+        "100 minutes par jour",
+        "80 minutes par jour"
+      ],
+      "answer": 2,
+      "explanations": [
+        "180 minutes est le temps initial, pas le temps gagné.",
+        "100 minutes est le nouveau total : 80 minutes de traitement et 20 de suivi.",
+        "Le temps initial est 180 minutes ; le nouveau est 100 minutes ; la différence est 80."
+      ],
+      "lessonId": "audit"
+    },
+    {
+      "id": "q24",
+      "prompt": "Deux appels de recherche prennent 800 et 1 200 ms en parallèle. Si la suite attend les deux, quelle attente de recherche approximer hors surcoûts ?",
+      "options": [
+        "2 000 ms",
+        "1 200 ms",
+        "800 ms"
+      ],
+      "answer": 1,
+      "explanations": [
+        "Additionner leurs durées ignore leur chevauchement.",
+        "La suite attend la fin de l’appel le plus long dans les conditions décrites.",
+        "L’appel le plus court ne suffit pas si les deux résultats sont nécessaires."
+      ],
+      "lessonId": "observabilite"
     }
   ]
 }

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 670" role="img" aria-labelledby="title desc">
+<title id="title">Un bloc Transformer causal avec connexions résiduelles</title><desc id="desc">Les représentations passent par une normalisation puis une attention causale. La sortie est additionnée à l'entrée par un chemin résiduel. Un second chemin passe par normalisation et réseau de transformation avant une nouvelle addition résiduelle. Le résultat va au bloc suivant.</desc>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#28614c"/></marker></defs>
+<rect width="900" height="670" rx="18" fill="#f5f5ed"/>
+<g font-family="system-ui,sans-serif" fill="#183c33">
+<text x="30" y="40" font-size="22" font-weight="bold">Transformer : transformer les représentations</text>
+<text x="30" y="70" font-size="15">Exemple simplifié à normalisation avant chaque sous-bloc.</text>
+<g fill="#fff" stroke="#b5c4b7"><rect x="240" y="100" width="410" height="70" rx="12"/><rect x="240" y="225" width="410" height="90" rx="12"/><rect x="240" y="420" width="410" height="90" rx="12"/><rect x="240" y="590" width="410" height="55" rx="12"/></g>
+<g text-anchor="middle"><text x="445" y="143" font-size="21">Représentations des tokens</text><text x="445" y="260" font-size="21">Normalisation + attention causale</text><text x="445" y="291" font-size="15">Q, K, V ; masque des positions futures</text><text x="445" y="455" font-size="21">Normalisation + réseau de transformation</text><text x="445" y="487" font-size="15">Transformation de chaque position</text><text x="445" y="624" font-size="21">Vers le bloc suivant</text></g>
+<g fill="#e4ebdb" stroke="#28614c"><circle cx="445" cy="365" r="23"/><circle cx="445" cy="552" r="23"/></g><g font-size="26" text-anchor="middle"><text x="445" y="373">+</text><text x="445" y="560">+</text></g>
+<g fill="none" stroke="#28614c" stroke-width="2.5" marker-end="url(#a)"><path d="M445 170V225"/><path d="M445 315V342"/><path d="M445 388V420"/><path d="M445 510V529"/><path d="M445 575V590"/><path d="M445 195H125V365H422"/><path d="M445 402H745V552H468"/></g>
+<text x="42" y="275" font-size="16">Chemin résiduel</text><text x="699" y="465" font-size="16">Chemin résiduel</text>
+</g></svg>

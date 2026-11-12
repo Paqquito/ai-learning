@@ -59,13 +59,14 @@ test('Les nouveaux exercices ont un corrigé replié et leurs illustrations exis
 });
 
 test('Les résultats historiques survivent à l’extension du quiz sans devenir le record actuel',()=>{
- const saved={...emptyProgress(),read:['llm'],caseDraft:'Mon travail',attempts:[{score:6,total:6,date:'2026-11-12T12:00:00Z'}]};
+ const saved={...emptyProgress(),read:['llm'],caseDraft:'Mon travail',attempts:[{score:6,total:6,date:'2026-11-12T12:00:00Z'},{score:12,total:14,date:'2026-11-12T13:00:00Z'}]};
  const restored=validateProgress(saved,data.path,data.quiz.questions.length);
  assert.deepEqual(restored,saved);
  assert.ok(progressView(data,restored).includes('6 / 6'));
  assert.ok(progressView(data,restored).includes('<strong>—</strong><span>meilleur résultat au quiz actuel'));
- restored.attempts.push({score:10,total:14,date:'2026-11-12T14:00:00Z'});
- assert.ok(progressView(data,restored).includes('<strong>10/14</strong>'));
+ assert.ok(progressView(data,restored).includes('12 / 14'));
+ restored.attempts.push({score:10,total:data.quiz.questions.length,date:'2026-11-12T14:00:00Z'});
+ assert.ok(progressView(data,restored).includes(`<strong>10/${data.quiz.questions.length}</strong>`));
  assert.throws(()=>validateProgress({...saved,attempts:[{score:7,total:6,date:'2026-11-12'}]},data.path,14));
- assert.ok(practice(data).includes('14 questions'));
+ assert.ok(practice(data).includes(`${data.quiz.questions.length} questions`));
 });

@@ -308,6 +308,126 @@
         "memoire",
         "confidentialite"
       ]
+    },
+    {
+      "id": "vecteurs",
+      "title": "Vecteurs matrices et similarité",
+      "file": "Cours/Vecteurs matrices et similarité.md",
+      "domain": "maths",
+      "minutes": 10,
+      "summary": "Lire les dimensions, calculer un produit matriciel et interpréter la similarité cosinus.",
+      "prerequisites": [
+        "llm"
+      ]
+    },
+    {
+      "id": "apprentissage",
+      "title": "Apprentissage gradients et surapprentissage",
+      "file": "Cours/Apprentissage gradients et surapprentissage.md",
+      "domain": "ml",
+      "minutes": 12,
+      "summary": "Comprendre perte, gradient, optimisation, validation et fuites entre ensembles.",
+      "prerequisites": [
+        "vecteurs",
+        "evaluation"
+      ]
+    },
+    {
+      "id": "transformer",
+      "title": "Comprendre le Transformer et son attention",
+      "file": "Cours/Comprendre le Transformer et son attention.md",
+      "domain": "models",
+      "minutes": 12,
+      "summary": "Relier tokens, attention, masque causal et blocs de transformation.",
+      "prerequisites": [
+        "llm",
+        "vecteurs"
+      ]
+    },
+    {
+      "id": "moe",
+      "title": "Comprendre les modèles MoE",
+      "file": "Cours/Comprendre les modèles MoE.md",
+      "domain": "models",
+      "minutes": 10,
+      "summary": "Distinguer experts internes, paramètres totaux et actifs, mémoire et calcul.",
+      "prerequisites": [
+        "transformer",
+        "memoire"
+      ]
+    },
+    {
+      "id": "jepa",
+      "title": "Comprendre JEPA et la prédiction de représentations",
+      "file": "Cours/Comprendre JEPA et la prédiction de représentations.md",
+      "domain": "models",
+      "minutes": 12,
+      "summary": "Comprendre les cibles latentes, I-JEPA et V-JEPA sans les confondre avec un chatbot.",
+      "prerequisites": [
+        "apprentissage",
+        "transformer"
+      ]
+    },
+    {
+      "id": "lora",
+      "title": "Fine-tuning et adaptation avec LoRA",
+      "file": "Cours/Fine-tuning et adaptation avec LoRA.md",
+      "domain": "adapt",
+      "minutes": 12,
+      "summary": "Choisir une adaptation et calculer ce que les adaptateurs de faible rang économisent.",
+      "prerequisites": [
+        "apprentissage",
+        "memoire"
+      ]
+    },
+    {
+      "id": "docker",
+      "title": "Docker images conteneurs et services IA",
+      "file": "Cours/Docker images conteneurs et services IA.md",
+      "domain": "software",
+      "minutes": 10,
+      "summary": "Placer images, volumes, ports et GPU dans une architecture de services.",
+      "prerequisites": [
+        "api",
+        "materiel"
+      ]
+    },
+    {
+      "id": "extensions",
+      "title": "Distinguer outils MCP skills et plugins",
+      "file": "Cours/Distinguer outils MCP skills et plugins.md",
+      "domain": "agents",
+      "minutes": 10,
+      "summary": "Identifier capacité exécutable, procédure, protocole, emballage et permissions.",
+      "prerequisites": [
+        "mcp",
+        "outils"
+      ]
+    },
+    {
+      "id": "audit",
+      "title": "Auditer un processus avant de proposer une IA",
+      "file": "Cours/Auditer un processus avant de proposer une IA.md",
+      "domain": "consulting",
+      "minutes": 12,
+      "summary": "Mesurer le travail et les attentes, cadrer un pilote et calculer le gain net.",
+      "prerequisites": [
+        "workflow",
+        "choix-modele"
+      ]
+    },
+    {
+      "id": "observabilite",
+      "title": "Observer et diagnostiquer une application IA",
+      "file": "Cours/Observer et diagnostiquer une application IA.md",
+      "domain": "ops",
+      "minutes": 10,
+      "summary": "Utiliser métriques, logs et traces pour localiser une panne ou une régression.",
+      "prerequisites": [
+        "api",
+        "outils",
+        "confidentialite"
+      ]
     }
   ],
   "path": [
@@ -324,6 +444,16 @@
     "rag-doc",
     "graphe",
     "confidentialite",
-    "choix-modele"
+    "choix-modele",
+    "vecteurs",
+    "apprentissage",
+    "transformer",
+    "moe",
+    "jepa",
+    "lora",
+    "docker",
+    "extensions",
+    "audit",
+    "observabilite"
   ]
 }
