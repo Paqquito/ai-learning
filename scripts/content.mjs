@@ -15,9 +15,12 @@ export function renderMarkdown(source, lessons) {
       .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
       .replace(/`([^`]+)`/g, '<code>$1</code>');
   }
-  let output = [], paragraph = [], list = [], code = null;
+  let output = [], paragraph = [], list = [], code = null, correction = null;
+  const closeCorrection = () => { output.push(`<details class="correction"><summary>Dévoiler les repères de correction</summary>${renderMarkdown(correction.join('\n'),lessons)}</details>`);correction=null; };
   const flush = () => { if (paragraph.length) output.push(`<p>${inline(paragraph.join(' '))}</p>`); paragraph=[]; if(list.length) output.push(`<ul>${list.map(s=>`<li>${inline(s)}</li>`).join('')}</ul>`);list=[]; };
   for (const line of source.split(/\r?\n/)) {
+    if(correction!==null){if(line.startsWith('> ')){correction.push(line.slice(2));continue;}closeCorrection();}
+    if(code===null&&line==='> [!answer]- Repères de correction'){flush();correction=[];continue;}
     if(line.startsWith('```')) { if(code !== null){output.push(`<pre><code>${escapeHtml(code.join('\n'))}</code></pre>`);code=null;}else{flush();code=[];}continue; }
     if(code!==null){code.push(line);continue;}
     const heading=line.match(/^(#{1,3}) (.+)$/);
@@ -26,6 +29,7 @@ export function renderMarkdown(source, lessons) {
     if(line.startsWith('- ')){if(paragraph.length)flush();list.push(line.slice(2));}else{if(list.length)flush();paragraph.push(line);}
   }
   if(code!==null) throw new Error('Bloc de code non fermé');
+  if(correction!==null)closeCorrection();
   flush();return output.join('\n');
 }
 export async function loadContent(root) {

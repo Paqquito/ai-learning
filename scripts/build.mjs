@@ -7,7 +7,7 @@ export async function build(){
   const data=await loadContent(root),dist=path.join(root,'dist');
   await mkdir(path.join(dist,'assets'),{recursive:true});
   for(const file of ['index.html','style.css','app.js','views.js','graph.js','state.js'])await copyFile(path.join(root,'web',file),path.join(dist,file));
-  await copyFile(path.join(root,'AI Learning/Assets/circuit.svg'),path.join(dist,'assets/circuit.svg'));
+  for(const file of ['circuit.svg','memoire.svg','outils.svg','rag.svg'])await copyFile(path.join(root,'AI Learning/Assets',file),path.join(dist,'assets',file));
   await writeFile(path.join(dist,'content.json'),JSON.stringify(data));
   return data;
 }

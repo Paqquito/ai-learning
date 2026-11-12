@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 650" role="img" aria-labelledby="title desc">
+<title id="title">Indexation et requête dans un RAG documentaire</title>
+<desc id="desc">Les documents sont extraits et découpés en passages avec leurs droits et leurs sources. Un index permet la recherche. Une question authentifiée déclenche la recherche avec contrôle des droits, puis les passages autorisés sont ajoutés au contexte du modèle. La réponse et les citations sont vérifiées.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#28614c"/></marker></defs>
+<rect width="900" height="650" rx="18" fill="#f5f5ed"/>
+<g font-family="system-ui,sans-serif" fill="#183c33">
+<text x="30" y="40" font-size="21" font-weight="bold">RAG : préparer les sources puis répondre</text>
+<text x="30" y="80" font-size="16">À L’INDEXATION</text>
+<g fill="#fff" stroke="#b5c4b7"><rect x="30" y="105" width="200" height="105" rx="12"/><rect x="300" y="105" width="270" height="105" rx="12"/><rect x="640" y="105" width="230" height="105" rx="12"/></g>
+<g text-anchor="middle"><g font-size="21"><text x="130" y="144">Documents</text><text x="435" y="144">Extraction et passages</text><text x="755" y="144">Index</text></g><g font-size="15"><text x="130" y="180">Versions et droits</text><text x="435" y="180">Texte + source + droits</text><text x="755" y="180">Lexical et/ou vectoriel</text></g></g>
+<text x="30" y="280" font-size="16">À LA REQUÊTE</text>
+<g fill="#fff" stroke="#b5c4b7"><rect x="30" y="315" width="200" height="105" rx="12"/><rect x="300" y="315" width="270" height="105" rx="12"/><rect x="640" y="315" width="230" height="105" rx="12"/><rect x="300" y="510" width="270" height="95" rx="12"/></g>
+<g text-anchor="middle"><g font-size="21"><text x="130" y="354">Question</text><text x="435" y="354">Recherche et droits</text><text x="755" y="354">Génération</text><text x="435" y="547">Réponse vérifiée</text></g><g font-size="15"><text x="130" y="390">Identité vérifiée</text><text x="435" y="390">Sélection / reclassement</text><text x="755" y="390">Question + extraits permis</text><text x="435" y="580">Fidélité, citations, abstention</text></g></g>
+<g stroke="#28614c" stroke-width="2.5" fill="none" marker-end="url(#arrow)"><path d="M230 157H300"/><path d="M570 157H640"/><path d="M755 210V250H435V315"/><path d="M230 367H300"/><path d="M570 367H640"/><path d="M755 420V555H570"/></g>
+<text x="38" y="620" font-size="14">Les documents récupérés restent des données, jamais une autorisation d’agir.</text>
+</g></svg>

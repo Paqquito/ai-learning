@@ -12,3 +12,14 @@ Une base pour comprendre, intégrer, auditer puis adapter les systèmes d'IA.
 - [[Évaluer une intégration]]
 
 Les QCM et le suivi de progression sont disponibles dans l'application web. Les sources des cours restent consultables ici. Les 16 domaines de la cartographie sont inventoriés dans catalog.json ; ils ne sont pas tous rédigés.
+
+## Approfondir les intégrations
+
+- [[Comprendre une API de modèle]]
+- [[CPU GPU RAM et VRAM]]
+- [[Estimer la mémoire et comprendre la quantification]]
+- [[Appeler des outils avec un modèle]]
+- [[Embeddings et RAG documentaire]]
+- [[Quand utiliser un graphe de données]]
+- [[Déployer une IA avec des données confidentielles]]
+- [[Choisir un modèle par la mesure]]

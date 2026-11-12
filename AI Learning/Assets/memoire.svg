@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" role="img" aria-labelledby="title desc">
+<title id="title">Calcul et mémoire dans une machine à GPU dédié</title>
+<desc id="desc">Les poids passent du SSD à la RAM puis à la VRAM. Le CPU utilise la RAM et pilote le GPU via une interconnexion. Le GPU utilise sa VRAM. Les deux capacités mémoire ne sont pas une seule réserve de VRAM.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10" fill="none" stroke="#28614c"/></marker></defs>
+<rect width="900" height="500" rx="18" fill="#f5f5ed"/>
+<g font-family="system-ui,sans-serif" fill="#183c33">
+<text x="32" y="40" font-size="20" font-weight="bold">Une machine, plusieurs rôles</text>
+<rect x="30" y="80" width="250" height="120" rx="12" fill="#fff" stroke="#b5c4b7"/>
+<rect x="350" y="80" width="220" height="120" rx="12" fill="#fff" stroke="#b5c4b7"/>
+<rect x="640" y="80" width="230" height="120" rx="12" fill="#e4ebdb" stroke="#b5c4b7"/>
+<rect x="350" y="300" width="220" height="100" rx="12" fill="#fff" stroke="#b5c4b7"/>
+<rect x="640" y="300" width="230" height="100" rx="12" fill="#183c33"/>
+<g text-anchor="middle" font-size="22"><text x="155" y="120">SSD</text><text x="460" y="120">RAM</text><text x="755" y="120">VRAM</text><text x="460" y="340">CPU</text><text x="755" y="340" fill="#fff">GPU</text></g>
+<g text-anchor="middle" font-size="15"><text x="155" y="155">Poids et documents durables</text><text x="460" y="155">Mémoire du système</text><text x="755" y="155">Mémoire du GPU dédié</text><text x="460" y="373">Préparation et orchestration</text><text x="755" y="373" fill="#fff">Calculs du modèle</text></g>
+<g stroke="#28614c" stroke-width="2.5" fill="none" marker-end="url(#arrow)"><path d="M280 140H350"/><path d="M570 140H640"/><path d="M460 300V200" marker-start="url(#arrow)"/><path d="M755 300V200" marker-start="url(#arrow)"/><path d="M570 350H640"/></g>
+<g font-size="13" text-anchor="middle"><text x="315" y="125">Lecture</text><text x="605" y="125">Transfert</text><text x="605" y="330">Pilotage</text></g>
+<text x="32" y="450" font-size="17">Capacité ≠ bande passante ≠ puissance de calcul.</text>
+<text x="32" y="477" font-size="14">Schéma simplifié : les transferts CPU–GPU dépendent de l’interconnexion et du moteur.</text>
+</g></svg>

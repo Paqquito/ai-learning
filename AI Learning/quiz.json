@@ -1,11 +1,246 @@
 {
-  "id":"fondations-v1","title":"Du modèle à l’intégration","lessonIds":["systeme","llm","workflow","harness","mcp","evaluation"],
-  "questions":[
-    {"id":"q1","prompt":"Un modèle propose une catégorie de ticket. Qui doit contrôler qu’elle est autorisée avant l’écriture ?","options":["Le logiciel d’intégration","Le modèle, simplement parce qu’on lui a demandé","Le GPU"],"answer":0,"explanations":["Le logiciel peut appliquer une vérification explicite avant l’action.","Une instruction ne remplace pas un contrôle exécuté par le logiciel.","Le GPU effectue des calculs ; il n’applique pas cette règle métier."],"lessonId":"systeme"},
-    {"id":"q2","prompt":"Ajouter un document au contexte d’une requête revient-il à entraîner le modèle ?","options":["Oui, les poids sont systématiquement modifiés","Non, le document sert à cette génération sans constituer un entraînement","Seulement si le document est long"],"answer":1,"explanations":["L’inférence n’implique pas une mise à jour des poids.","Le contexte et l’ajustement des paramètres sont deux mécanismes différents.","La longueur du contexte ne transforme pas l’inférence en entraînement."],"lessonId":"llm"},
-    {"id":"q3","prompt":"Lire, classer, contrôler puis soumettre à validation suit toujours les mêmes étapes. Quel est le choix initial le plus simple ?","options":["Une équipe de cinq agents autonomes","Un workflow prédéfini","Un fine-tuning obligatoire"],"answer":1,"explanations":["La tâche décrite ne justifie pas cette autonomie ni sa complexité.","Les étapes connues peuvent être orchestrées explicitement.","Le fine-tuning n’est pas un mécanisme d’orchestration et sa nécessité n’est pas établie."],"lessonId":"workflow"},
-    {"id":"q4","prompt":"Après un délai réseau dépassé, un agent risque de créer deux fois le même ticket. Quelle réponse est la plus robuste ?","options":["Écrire “ne crée jamais de doublons” dans le prompt","Utiliser automatiquement un modèle plus gros","Prévoir détection de doublons et reprise contrôlée dans l’intégration"],"answer":2,"explanations":["Une consigne seule ne donne pas la garantie opérationnelle recherchée.","La taille du modèle ne résout pas le problème de répétition d’une action externe.","La gestion d’état et des reprises relève de l’environnement d’exécution et du service appelé."],"lessonId":"harness"},
-    {"id":"q5","prompt":"Quelle affirmation décrit correctement MCP ?","options":["Il est obligatoire pour tout appel à une API","Il fournit une interface de communication et ne remplace pas les permissions métier","Il transforme automatiquement un petit modèle en grand modèle"],"answer":1,"explanations":["Une application peut appeler directement une API.","Les rôles du protocole et les contrôles de l’application sont distincts.","Un protocole de connexion ne change pas les paramètres du modèle."],"lessonId":"mcp"},
-    {"id":"q6","prompt":"95 % des demandes concernent la facturation. Un système répond toujours “facturation”. Que conclure de ses 95 % de réussite globale ?","options":["Il est prêt à être déployé","Il faut inspecter les erreurs par catégorie et comparer à cette référence triviale","Il suffit d’augmenter la mémoire du serveur"],"answer":1,"explanations":["Le taux global masque l’échec sur toutes les autres catégories.","Le déséquilibre exige des mesures par catégorie et une comparaison pertinente.","Aucune mesure n’indique ici un problème de mémoire."],"lessonId":"evaluation"}
+  "id": "fondations-v2",
+  "title": "Intégration, infrastructure et données",
+  "lessonIds": [
+    "systeme",
+    "llm",
+    "workflow",
+    "harness",
+    "mcp",
+    "evaluation",
+    "api",
+    "materiel",
+    "memoire",
+    "outils",
+    "rag-doc",
+    "graphe",
+    "confidentialite",
+    "choix-modele"
+  ],
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "Un modèle propose une catégorie de ticket. Qui doit contrôler qu’elle est autorisée avant l’écriture ?",
+      "options": [
+        "Le logiciel d’intégration",
+        "Le modèle, simplement parce qu’on lui a demandé",
+        "Le GPU"
+      ],
+      "answer": 0,
+      "explanations": [
+        "Le logiciel peut appliquer une vérification explicite avant l’action.",
+        "Une instruction ne remplace pas un contrôle exécuté par le logiciel.",
+        "Le GPU effectue des calculs ; il n’applique pas cette règle métier."
+      ],
+      "lessonId": "systeme"
+    },
+    {
+      "id": "q2",
+      "prompt": "Ajouter un document au contexte d’une requête revient-il à entraîner le modèle ?",
+      "options": [
+        "Oui, les poids sont systématiquement modifiés",
+        "Non, le document sert à cette génération sans constituer un entraînement",
+        "Seulement si le document est long"
+      ],
+      "answer": 1,
+      "explanations": [
+        "L’inférence n’implique pas une mise à jour des poids.",
+        "Le contexte et l’ajustement des paramètres sont deux mécanismes différents.",
+        "La longueur du contexte ne transforme pas l’inférence en entraînement."
+      ],
+      "lessonId": "llm"
+    },
+    {
+      "id": "q3",
+      "prompt": "Lire, classer, contrôler puis soumettre à validation suit toujours les mêmes étapes. Quel est le choix initial le plus simple ?",
+      "options": [
+        "Une équipe de cinq agents autonomes",
+        "Un workflow prédéfini",
+        "Un fine-tuning obligatoire"
+      ],
+      "answer": 1,
+      "explanations": [
+        "La tâche décrite ne justifie pas cette autonomie ni sa complexité.",
+        "Les étapes connues peuvent être orchestrées explicitement.",
+        "Le fine-tuning n’est pas un mécanisme d’orchestration et sa nécessité n’est pas établie."
+      ],
+      "lessonId": "workflow"
+    },
+    {
+      "id": "q4",
+      "prompt": "Après un délai réseau dépassé, un agent risque de créer deux fois le même ticket. Quelle réponse est la plus robuste ?",
+      "options": [
+        "Écrire “ne crée jamais de doublons” dans le prompt",
+        "Utiliser automatiquement un modèle plus gros",
+        "Prévoir détection de doublons et reprise contrôlée dans l’intégration"
+      ],
+      "answer": 2,
+      "explanations": [
+        "Une consigne seule ne donne pas la garantie opérationnelle recherchée.",
+        "La taille du modèle ne résout pas le problème de répétition d’une action externe.",
+        "La gestion d’état et des reprises relève de l’environnement d’exécution et du service appelé."
+      ],
+      "lessonId": "harness"
+    },
+    {
+      "id": "q5",
+      "prompt": "Quelle affirmation décrit correctement MCP ?",
+      "options": [
+        "Il est obligatoire pour tout appel à une API",
+        "Il fournit une interface de communication et ne remplace pas les permissions métier",
+        "Il transforme automatiquement un petit modèle en grand modèle"
+      ],
+      "answer": 1,
+      "explanations": [
+        "Une application peut appeler directement une API.",
+        "Les rôles du protocole et les contrôles de l’application sont distincts.",
+        "Un protocole de connexion ne change pas les paramètres du modèle."
+      ],
+      "lessonId": "mcp"
+    },
+    {
+      "id": "q6",
+      "prompt": "95 % des demandes concernent la facturation. Un système répond toujours “facturation”. Que conclure de ses 95 % de réussite globale ?",
+      "options": [
+        "Il est prêt à être déployé",
+        "Il faut inspecter les erreurs par catégorie et comparer à cette référence triviale",
+        "Il suffit d’augmenter la mémoire du serveur"
+      ],
+      "answer": 1,
+      "explanations": [
+        "Le taux global masque l’échec sur toutes les autres catégories.",
+        "Le déséquilibre exige des mesures par catégorie et une comparaison pertinente.",
+        "Aucune mesure n’indique ici un problème de mémoire."
+      ],
+      "lessonId": "evaluation"
+    },
+    {
+      "id": "q7",
+      "prompt": "Une API répond HTTP 200 avec une catégorie absente de la liste autorisée. Que faire ?",
+      "options": [
+        "Accepter car le transport a réussi",
+        "Rejeter ou orienter vers un traitement de repli après validation applicative",
+        "Remplacer le câble réseau"
+      ],
+      "answer": 1,
+      "explanations": [
+        "Le succès HTTP ne prouve pas la validité métier de la sortie.",
+        "Le contrat de sortie doit être contrôlé indépendamment du code HTTP.",
+        "Le transport a abouti ; le problème décrit concerne le contenu."
+      ],
+      "lessonId": "api"
+    },
+    {
+      "id": "q8",
+      "prompt": "Une machine dispose de 32 Go de RAM et de 12 Go de VRAM sur une carte dédiée. Quel budget VRAM faut-il retenir ?",
+      "options": [
+        "44 Go, automatiquement",
+        "32 Go, car la RAM remplace la VRAM",
+        "12 Go avant les autres consommations GPU"
+      ],
+      "answer": 2,
+      "explanations": [
+        "Les deux mémoires ne forment pas automatiquement une réserve unique de VRAM.",
+        "Un offload en RAM a des contraintes de transfert ou de calcul ; il ne transforme pas cette RAM en VRAM.",
+        "La capacité dédiée reste 12 Go, dont il faut retrancher les autres usages."
+      ],
+      "lessonId": "materiel"
+    },
+    {
+      "id": "q9",
+      "prompt": "Un modèle fonctionne avec un prompt court mais manque de mémoire à contexte long. Quelle hypothèse faut-il tester ?",
+      "options": [
+        "La croissance du cache KV et des données temporaires",
+        "Un entraînement automatique déclenché par le prompt",
+        "Une augmentation du nombre de paramètres à chaque requête"
+      ],
+      "answer": 0,
+      "explanations": [
+        "Le contexte peut augmenter la mémoire nécessaire même si les poids restent identiques.",
+        "Ajouter du contexte ne met pas automatiquement à jour les poids.",
+        "Le nombre de paramètres ne croît pas à chaque génération."
+      ],
+      "lessonId": "memoire"
+    },
+    {
+      "id": "q10",
+      "prompt": "Un modèle demande un outil de suppression alors que la session ne permet que la lecture. Quelle décision doit prendre le harness ?",
+      "options": [
+        "Exécuter si les arguments sont du JSON valide",
+        "Demander au modèle de confirmer ses droits",
+        "Refuser sans exécuter et retourner une erreur contrôlée"
+      ],
+      "answer": 2,
+      "explanations": [
+        "La conformité du format ne donne aucune permission métier.",
+        "Les droits doivent provenir du système authentifié, pas d’une affirmation du modèle.",
+        "Les permissions sont contrôlées par le logiciel avant toute action."
+      ],
+      "lessonId": "outils"
+    },
+    {
+      "id": "q11",
+      "prompt": "Le RAG répond mal car la clause d’exception ne figure pas dans les passages transmis. Que vérifier en premier ?",
+      "options": [
+        "Seulement la température du générateur",
+        "Extraction, découpage et recherche de la clause",
+        "Le nombre de couleurs du graphe"
+      ],
+      "answer": 1,
+      "explanations": [
+        "La température ne réintroduit pas une preuve absente du contexte.",
+        "Il faut tester la présence du passage attendu avant de juger la génération.",
+        "L’apparence d’un graphe ne corrige pas la sélection documentaire."
+      ],
+      "lessonId": "rag-doc"
+    },
+    {
+      "id": "q12",
+      "prompt": "Quelle question justifie le mieux d’évaluer une recherche sur des relations métier ?",
+      "options": [
+        "Quels actifs dépendent indirectement d’un fournisseur à une date donnée ?",
+        "Peux-tu reformuler cette phrase ?",
+        "Peux-tu compter les caractères de ce titre ?"
+      ],
+      "answer": 0,
+      "explanations": [
+        "Des relations typées et datées permettent de parcourir des dépendances et d’en montrer les preuves.",
+        "Une reformulation seule ne requiert pas un graphe métier.",
+        "Une fonction déterministe suffit à ce comptage."
+      ],
+      "lessonId": "graphe"
+    },
+    {
+      "id": "q13",
+      "prompt": "Le modèle est interne, mais les prompts sont envoyés à une supervision externe. Peut-on affirmer que les données restent en interne ?",
+      "options": [
+        "Oui, seul le lieu du modèle compte",
+        "Oui, si le transport est chiffré",
+        "Non, il faut inclure la supervision dans le circuit des données"
+      ],
+      "answer": 2,
+      "explanations": [
+        "Les services annexes peuvent eux aussi recevoir du contenu confidentiel.",
+        "TLS protège le trajet ; le destinataire reçoit néanmoins les données.",
+        "La frontière doit couvrir les journaux, les outils, les sauvegardes et les autres services."
+      ],
+      "lessonId": "confidentialite"
+    },
+    {
+      "id": "q14",
+      "prompt": "Deux configurations sont comparées. A obtient un meilleur score global mais davantage d’erreurs critiques. Que conclure ?",
+      "options": [
+        "A est nécessairement préférable",
+        "Il faut examiner les critères métier, les erreurs et le travail humain avant de décider",
+        "B est prouvée sans risque si aucune erreur critique n’a été observée"
+      ],
+      "answer": 1,
+      "explanations": [
+        "Un total peut masquer des échecs dont le coût est disproportionné.",
+        "La décision doit appliquer les seuils définis et tenir compte des limites de l’échantillon.",
+        "L’absence d’erreur observée ne démontre pas une absence de risque."
+      ],
+      "lessonId": "choix-modele"
+    }
   ]
 }

@@ -1,30 +1,329 @@
 {
   "version": 1,
   "domains": [
-    {"id":"panorama","title":"Panorama de l’IA","topics":["Histoire et vocabulaire","IA symbolique et apprentissage","Capacités et limites"]},
-    {"id":"maths","title":"Mathématiques","topics":["Algèbre linéaire","Probabilités et statistiques","Optimisation et information"]},
-    {"id":"software","title":"Informatique et réseaux","topics":["Python et lecture de code","Linux, Git et Docker","HTTP, DNS, TLS et API"]},
-    {"id":"data","title":"Données","topics":["Qualité et provenance","Annotation et jeux de tests","Données synthétiques"]},
-    {"id":"ml","title":"Machine learning","topics":["Classification et régression","Clustering et anomalies","Séries temporelles"]},
-    {"id":"dl","title":"Deep learning","topics":["Gradients et rétropropagation","Réseaux de neurones","Apprentissage autosupervisé et renforcement"]},
-    {"id":"models","title":"Modèles et architectures","topics":["LLM et Transformers","MoE et JEPA","Diffusion, vision et multimodalité"]},
-    {"id":"adapt","title":"Entraînement et adaptation","topics":["Préentraînement","Fine-tuning et LoRA","Distillation et alignement"]},
-    {"id":"inference","title":"Inférence","topics":["Contexte et cache KV","Quantification","Latence, débit et batching"]},
-    {"id":"infra","title":"Matériel et infrastructure","topics":["CPU, GPU, NPU, RAM et VRAM","NVIDIA, AMD, Apple et Mac Studio","DGX Spark, serveurs et interconnexions"]},
-    {"id":"rag","title":"Recherche et RAG","topics":["Embeddings et recherche hybride","Reranking et citations","Graphes de connaissances et GraphRAG"]},
-    {"id":"agents","title":"Agents et intégrations","topics":["Workflows et harness","Outils, MCP et mémoire","Plugins, skills et permissions"]},
-    {"id":"eval","title":"Évaluation et fiabilité","topics":["Jeux de tests et métriques","Analyse des échecs","Robustesse et reproductibilité"]},
-    {"id":"ops","title":"Production et exploitation","topics":["Déploiement et observabilité","Coûts et disponibilité","Versions et incidents"]},
-    {"id":"security","title":"Sécurité et gouvernance","topics":["Confidentialité et contrôle d’accès","Injections et isolation","Licences et cadre réglementaire"]},
-    {"id":"consulting","title":"Audit et conseil","topics":["Cartographie des processus","Faisabilité et ROI","Conduite du changement"]}
+    {
+      "id": "panorama",
+      "title": "Panorama de l’IA",
+      "topics": [
+        "Histoire et vocabulaire",
+        "IA symbolique et apprentissage",
+        "Capacités et limites"
+      ]
+    },
+    {
+      "id": "maths",
+      "title": "Mathématiques",
+      "topics": [
+        "Algèbre linéaire",
+        "Probabilités et statistiques",
+        "Optimisation et information"
+      ]
+    },
+    {
+      "id": "software",
+      "title": "Informatique et réseaux",
+      "topics": [
+        "Python et lecture de code",
+        "Linux, Git et Docker",
+        "HTTP, DNS, TLS et API"
+      ]
+    },
+    {
+      "id": "data",
+      "title": "Données",
+      "topics": [
+        "Qualité et provenance",
+        "Annotation et jeux de tests",
+        "Données synthétiques"
+      ]
+    },
+    {
+      "id": "ml",
+      "title": "Machine learning",
+      "topics": [
+        "Classification et régression",
+        "Clustering et anomalies",
+        "Séries temporelles"
+      ]
+    },
+    {
+      "id": "dl",
+      "title": "Deep learning",
+      "topics": [
+        "Gradients et rétropropagation",
+        "Réseaux de neurones",
+        "Apprentissage autosupervisé et renforcement"
+      ]
+    },
+    {
+      "id": "models",
+      "title": "Modèles et architectures",
+      "topics": [
+        "LLM et Transformers",
+        "MoE et JEPA",
+        "Diffusion, vision et multimodalité"
+      ]
+    },
+    {
+      "id": "adapt",
+      "title": "Entraînement et adaptation",
+      "topics": [
+        "Préentraînement",
+        "Fine-tuning et LoRA",
+        "Distillation et alignement"
+      ]
+    },
+    {
+      "id": "inference",
+      "title": "Inférence",
+      "topics": [
+        "Contexte et cache KV",
+        "Quantification",
+        "Latence, débit et batching"
+      ]
+    },
+    {
+      "id": "infra",
+      "title": "Matériel et infrastructure",
+      "topics": [
+        "CPU, GPU, NPU, RAM et VRAM",
+        "NVIDIA, AMD, Apple et Mac Studio",
+        "DGX Spark, serveurs et interconnexions"
+      ]
+    },
+    {
+      "id": "rag",
+      "title": "Recherche et RAG",
+      "topics": [
+        "Embeddings et recherche hybride",
+        "Reranking et citations",
+        "Graphes de connaissances et GraphRAG"
+      ]
+    },
+    {
+      "id": "agents",
+      "title": "Agents et intégrations",
+      "topics": [
+        "Workflows et harness",
+        "Outils, MCP et mémoire",
+        "Plugins, skills et permissions"
+      ]
+    },
+    {
+      "id": "eval",
+      "title": "Évaluation et fiabilité",
+      "topics": [
+        "Jeux de tests et métriques",
+        "Analyse des échecs",
+        "Robustesse et reproductibilité"
+      ]
+    },
+    {
+      "id": "ops",
+      "title": "Production et exploitation",
+      "topics": [
+        "Déploiement et observabilité",
+        "Coûts et disponibilité",
+        "Versions et incidents"
+      ]
+    },
+    {
+      "id": "security",
+      "title": "Sécurité et gouvernance",
+      "topics": [
+        "Confidentialité et contrôle d’accès",
+        "Injections et isolation",
+        "Licences et cadre réglementaire"
+      ]
+    },
+    {
+      "id": "consulting",
+      "title": "Audit et conseil",
+      "topics": [
+        "Cartographie des processus",
+        "Faisabilité et ROI",
+        "Conduite du changement"
+      ]
+    }
   ],
   "lessons": [
-    {"id":"systeme","title":"Du modèle au système","file":"Cours/Du modèle au système.md","domain":"panorama","minutes":8,"summary":"Situer le modèle, l’application, les outils et la validation humaine.","prerequisites":[]},
-    {"id":"llm","title":"Comprendre un LLM","file":"Cours/Comprendre un LLM.md","domain":"models","minutes":6,"summary":"Tokens, génération, contexte : les bases pour intégrer un modèle.","prerequisites":["systeme"]},
-    {"id":"workflow","title":"Workflow ou agent","file":"Cours/Workflow ou agent.md","domain":"agents","minutes":6,"summary":"Choisir le degré d’autonomie utile à une tâche.","prerequisites":["systeme"]},
-    {"id":"harness","title":"Le rôle du harness","file":"Cours/Le rôle du harness.md","domain":"agents","minutes":6,"summary":"Organiser le contexte, les outils, les limites et les traces.","prerequisites":["workflow"]},
-    {"id":"mcp","title":"Situer MCP","file":"Cours/Situer MCP.md","domain":"agents","minutes":5,"summary":"Comprendre la connexion entre une application et ses outils.","prerequisites":["harness"]},
-    {"id":"evaluation","title":"Évaluer une intégration","file":"Cours/Évaluer une intégration.md","domain":"eval","minutes":8,"summary":"Comparer une solution à une référence et analyser ses erreurs.","prerequisites":["llm","workflow"]}
+    {
+      "id": "systeme",
+      "title": "Du modèle au système",
+      "file": "Cours/Du modèle au système.md",
+      "domain": "panorama",
+      "minutes": 8,
+      "summary": "Situer le modèle, l’application, les outils et la validation humaine.",
+      "prerequisites": []
+    },
+    {
+      "id": "llm",
+      "title": "Comprendre un LLM",
+      "file": "Cours/Comprendre un LLM.md",
+      "domain": "models",
+      "minutes": 6,
+      "summary": "Tokens, génération, contexte : les bases pour intégrer un modèle.",
+      "prerequisites": [
+        "systeme"
+      ]
+    },
+    {
+      "id": "workflow",
+      "title": "Workflow ou agent",
+      "file": "Cours/Workflow ou agent.md",
+      "domain": "agents",
+      "minutes": 6,
+      "summary": "Choisir le degré d’autonomie utile à une tâche.",
+      "prerequisites": [
+        "systeme"
+      ]
+    },
+    {
+      "id": "harness",
+      "title": "Le rôle du harness",
+      "file": "Cours/Le rôle du harness.md",
+      "domain": "agents",
+      "minutes": 6,
+      "summary": "Organiser le contexte, les outils, les limites et les traces.",
+      "prerequisites": [
+        "workflow"
+      ]
+    },
+    {
+      "id": "mcp",
+      "title": "Situer MCP",
+      "file": "Cours/Situer MCP.md",
+      "domain": "agents",
+      "minutes": 5,
+      "summary": "Comprendre la connexion entre une application et ses outils.",
+      "prerequisites": [
+        "harness"
+      ]
+    },
+    {
+      "id": "evaluation",
+      "title": "Évaluer une intégration",
+      "file": "Cours/Évaluer une intégration.md",
+      "domain": "eval",
+      "minutes": 8,
+      "summary": "Comparer une solution à une référence et analyser ses erreurs.",
+      "prerequisites": [
+        "llm",
+        "workflow"
+      ]
+    },
+    {
+      "id": "api",
+      "title": "Comprendre une API de modèle",
+      "file": "Cours/Comprendre une API de modèle.md",
+      "domain": "software",
+      "minutes": 10,
+      "summary": "HTTP, réseau, authentification et erreurs : intégrer un service sans administrer son serveur.",
+      "prerequisites": [
+        "systeme",
+        "llm"
+      ]
+    },
+    {
+      "id": "materiel",
+      "title": "CPU GPU RAM et VRAM",
+      "file": "Cours/CPU GPU RAM et VRAM.md",
+      "domain": "infra",
+      "minutes": 10,
+      "summary": "Distinguer calcul, stockage, capacité et bande passante dans une infrastructure locale.",
+      "prerequisites": [
+        "systeme"
+      ]
+    },
+    {
+      "id": "memoire",
+      "title": "Estimer la mémoire et comprendre la quantification",
+      "file": "Cours/Estimer la mémoire et comprendre la quantification.md",
+      "domain": "inference",
+      "minutes": 12,
+      "summary": "Calculer les poids et le cache KV, puis mesurer les limites du contexte et de la concurrence.",
+      "prerequisites": [
+        "llm",
+        "materiel"
+      ]
+    },
+    {
+      "id": "outils",
+      "title": "Appeler des outils avec un modèle",
+      "file": "Cours/Appeler des outils avec un modèle.md",
+      "domain": "agents",
+      "minutes": 10,
+      "summary": "Construire une boucle bornée avec validation, droits, résultats et traitement des erreurs.",
+      "prerequisites": [
+        "harness",
+        "mcp",
+        "api"
+      ]
+    },
+    {
+      "id": "rag-doc",
+      "title": "Embeddings et RAG documentaire",
+      "file": "Cours/Embeddings et RAG documentaire.md",
+      "domain": "rag",
+      "minutes": 12,
+      "summary": "Retrouver des passages autorisés, citer les sources et distinguer recherche et génération.",
+      "prerequisites": [
+        "llm",
+        "api"
+      ]
+    },
+    {
+      "id": "graphe",
+      "title": "Quand utiliser un graphe de données",
+      "file": "Cours/Quand utiliser un graphe de données.md",
+      "domain": "rag",
+      "minutes": 10,
+      "summary": "Comparer liens de navigation, relations métier et GraphRAG à partir de questions concrètes.",
+      "prerequisites": [
+        "rag-doc"
+      ]
+    },
+    {
+      "id": "confidentialite",
+      "title": "Déployer une IA avec des données confidentielles",
+      "file": "Cours/Déployer une IA avec des données confidentielles.md",
+      "domain": "security",
+      "minutes": 12,
+      "summary": "Tracer les flux, les droits, les journaux et les outils au-delà du seul hébergement du modèle.",
+      "prerequisites": [
+        "api",
+        "outils",
+        "rag-doc"
+      ]
+    },
+    {
+      "id": "choix-modele",
+      "title": "Choisir un modèle par la mesure",
+      "file": "Cours/Choisir un modèle par la mesure.md",
+      "domain": "eval",
+      "minutes": 12,
+      "summary": "Comparer qualité, latence, charge, erreurs et coût humain avant de choisir une infrastructure.",
+      "prerequisites": [
+        "evaluation",
+        "memoire",
+        "confidentialite"
+      ]
+    }
   ],
-  "path": ["systeme","llm","workflow","harness","mcp","evaluation"]
+  "path": [
+    "systeme",
+    "llm",
+    "workflow",
+    "harness",
+    "mcp",
+    "evaluation",
+    "api",
+    "materiel",
+    "memoire",
+    "outils",
+    "rag-doc",
+    "graphe",
+    "confidentialite",
+    "choix-modele"
+  ]
 }

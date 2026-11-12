@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" role="img" aria-labelledby="title desc">
+<title id="title">Du modèle à une action contrôlée</title>
+<desc id="desc">Le modèle propose un outil et des arguments au harness. Le harness valide les droits et arguments. Il exécute l'outil si autorisé, puis renvoie un résultat au modèle. Les refus reviennent au modèle sans exécution. Un budget borne toute la boucle.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#28614c"/></marker></defs>
+<rect width="900" height="560" rx="18" fill="#f5f5ed"/>
+<g font-family="system-ui,sans-serif" fill="#183c33">
+<text x="32" y="40" font-size="21" font-weight="bold">Le modèle propose ; le logiciel contrôle et exécute</text>
+<rect x="35" y="100" width="230" height="105" rx="12" fill="#183c33"/>
+<rect x="350" y="100" width="500" height="105" rx="12" fill="#fff" stroke="#b5c4b7"/>
+<rect x="350" y="310" width="245" height="110" rx="12" fill="#fff" stroke="#b5c4b7"/>
+<rect x="665" y="310" width="185" height="110" rx="12" fill="#e4ebdb"/>
+<g text-anchor="middle"><text x="150" y="140" font-size="23" fill="#fff">Modèle</text><text x="150" y="177" font-size="15" fill="#fff">Proposition structurée</text><text x="600" y="140" font-size="23">Contrôles du harness</text><text x="600" y="177" font-size="15">Nom, arguments, identité, droits, validation</text><text x="472" y="350" font-size="22">Outil autorisé</text><text x="472" y="385" font-size="15">Lecture ou action bornée</text><text x="757" y="350" font-size="21">Résultat</text><text x="757" y="385" font-size="15">Succès ou erreur</text></g>
+<g stroke="#28614c" stroke-width="2.5" fill="none" marker-end="url(#arrow)"><path d="M265 150H350"/><path d="M472 205V310"/><path d="M595 365H665"/><path d="M757 420V465H150V205"/><path d="M350 180H305V260H180V205"/></g>
+<g font-size="15"><text x="490" y="255">Si autorisé</text><text x="210" y="288">Si refusé</text><text x="320" y="452">Retour lié à l’identifiant de l’appel</text></g>
+<text x="32" y="520" font-size="17">Limites : nombre d’appels, tours, temps total et coût.</text>
+</g></svg>
