@@ -20,7 +20,7 @@ Ouvrir http://127.0.0.1:4173. Le serveur reste limité à cette machine. Il reco
 - `tests/` : tests Node.
 - `docs/` : cadrage, décisions et prochaines étapes.
 
-Les notes Markdown sont la source unique des cours. `catalog.json` définit leurs identifiants stables, leur domaine et leurs prérequis. Les liens `[[Titre]]` alimentent le graphe. Le compilateur accepte titres, paragraphes, listes à puces, liens, images, gras, code inline et blocs de code. Il échappe le HTML brut ; Markdown complet, tableaux et Mermaid ne sont pas encore implémentés. Les schémas exacts sont en SVG.
+Les notes Markdown sont la source unique des cours. `catalog.json` définit leurs identifiants stables, leur domaine et leurs prérequis. Les liens `[[Titre]]` alimentent le graphe. Le compilateur accepte titres, paragraphes, listes à puces, liens, images, gras, code inline et blocs de code. Il échappe le HTML brut. Il prend aussi en charge les tableaux simples, l’italique et les encadrés Obsidian (dont formules et corrigés repliables). Les schémas exacts sont en SVG ; Mermaid et LaTeX ne sont pas interprétés.
 
 Les 16 domaines sont cartographiés, mais seuls les premiers cours sont rédigés : l'interface distingue disponibilité du contenu et progression personnelle. Un quiz réussi ou une lecture terminée n'est pas une certification.
 
@@ -30,18 +30,9 @@ Stockage local au navigateur, attaché à l'origine du site. Aucun compte et auc
 
 ## GitHub et Vercel
 
-Le dépôt Git local est initialisé sur `main`, mais aucun commit n'a pu être créé : l'environnement de l'assistant interdit l'écriture de `.git/index.lock`. Les fichiers du projet sont bien présents. Créer un dépôt GitHub **privé et vide**, sans README ni gitignore, puis connecter son URL depuis ce dossier. Aucune URL distante n'est supposée. Vérifier les fichiers avant le premier push ; ne pas y placer de données d'entreprise ni de clés.
+Dépôt existant : https://github.com/Paqquito/ai-learning.git. Site : https://ai-learning-woad.vercel.app. Build Vercel : `npm run build` ; sortie : `dist`. Les changements locaux doivent être commités puis poussés depuis un terminal autorisé pour mettre à jour le site. Le dossier `.git` est en lecture seule pour l’assistant dans cet environnement.
 
-Depuis un terminal personnel disposant des droits sur ce dossier, créer le premier commit :
-
-```sh
-git add .
-git commit -m "feat: initialize AI learning atlas"
-```
-
-Ajouter ensuite l'URL exacte du dépôt comme remote `origin`, puis pousser la branche `main`. Le serveur local de vérification a été arrêté ; relancer `npm run dev` pour consulter l'application.
-
-Importer ensuite le dépôt dans Vercel. Racine : ce dossier ; build : `npm run build` ; sortie : `dist`. Configurer une protection couvrant production et prévisualisations **avant de partager l'URL** : un dépôt privé ne protège pas le site. La configuration fournie ne crée pas d'authentification. Aucun déploiement n'a été effectué à ce stade.
+La protection du déploiement est distincte de la confidentialité du dépôt. Aucun appel de modèle ni transfert vers un service d’entreprise n’est effectué par l’application.
 
 ## Téléphone et Obsidian
 
@@ -50,3 +41,9 @@ L'application web est adaptée au téléphone ; elle sera accessible à distance
 ## Validation de cette version
 
 Exécuter `npm run check`. Les limites et décisions sont décrites dans `docs/PROJECT.md`. Les ressources externes des cours ont été consultées le 12 novembre 2026 ; les sources restent visibles dans chaque fiche.
+
+## Programme et présentation des cours
+
+Le catalogue complet est dans `AI Learning/Programme.md` et dans la page Programme de l’application. Il distingue les 24 introductions disponibles et les 169 cours à rédiger. Régénérer le fichier Obsidian avec `node scripts/programme.mjs` après une modification de `catalog.json` ou `roadmap.json`.
+
+Le graphe relie les fiches disponibles par leurs liens internes. Chaque fiche propose un sommaire, un repère dans le parcours et un exercice corrigé. Les choix éditoriaux et les limites sont détaillés dans `docs/LEARNING-EXPERIENCE.md`. Après une modification des scripts du compilateur, redémarrer le serveur local pour charger leur nouvelle version.

@@ -2,40 +2,107 @@
 
 ## Ce que tu sauras faire
 
-Lire les dimensions d'un calcul de réseau neuronal et calculer une similarité simple. Ce cours prépare [[Comprendre le Transformer et son attention]] et approfondit [[Embeddings et RAG documentaire]]. Il ne demande pas de maîtriser un logiciel de calcul.
+- Lire les **dimensions** d'un tenseur.
+- Calculer une transformation matricielle.
+- Interpréter une **similarité cosinus** et diagnostiquer un index incompatible.
 
-## Des nombres organisés
+> [!abstract] L'idée en une phrase
+> Les vecteurs représentent, les matrices transforment et la similarité compare. Ces opérations sont au cœur des réseaux de neurones et de la recherche documentaire.
 
-Un scalaire est une valeur, par exemple 3. Un vecteur est une liste ordonnée de valeurs, par exemple (2, 1, 0). Une matrice est un tableau à deux axes. Un tenseur généralise cette organisation à plusieurs axes. Le sens de chaque axe doit être précisé : lot de requêtes, positions de tokens, dimensions de représentation, etc.
+Cette fiche prépare [[Comprendre le Transformer et son attention]] et approfondit [[Embeddings et RAG documentaire]].
 
-Un lot de deux séquences de cinq tokens représentés par quatre valeurs chacun peut avoir une forme (2, 5, 4). Il contient 40 valeurs. Un axe n'est pas une propriété mystérieuse : c'est une façon de ranger les nombres. Dans un embedding appris, chaque coordonnée n'est généralement pas une catégorie lisible comme « politique » ou « mécanique ».
+## Lire les nombres et leurs dimensions
 
-## Le produit matriciel transforme une représentation
+| Objet | Organisation | Exemple | Usage en IA |
+| --- | --- | --- | --- |
+| Scalaire | Une valeur | 3 | Une perte |
+| Vecteur | Un axe | (2, 1, 0) | Une représentation de token |
+| Matrice | Deux axes | 2 lignes × 3 colonnes | Un lot de deux vecteurs |
+| Tenseur | Un nombre quelconque d'axes | Forme (2, 5, 4) | Lot × tokens × dimensions |
 
-Pour une matrice X de forme (n, d) et une matrice W de forme (d, m), le produit XW a la forme (n, m). Les dimensions intérieures doivent être compatibles. Ce produit n'est pas la multiplication case par case : chaque sortie combine plusieurs entrées pondérées.
+Un lot de **2 séquences**, chacune de **5 tokens**, avec **4 valeurs** par token possède 2 × 5 × 4 = **40 valeurs**. Chaque axe a un rôle qu'il faut nommer avant de calculer.
 
-Prenons une ligne X = (2, 1) et une matrice W dont les lignes sont (1, 3) et (4, 0). Le résultat est (6, 6) : 2 × 1 + 1 × 4 pour la première valeur, puis 2 × 3 + 1 × 0 pour la seconde. L'exemple est arbitraire, mais le mécanisme est celui d'une transformation linéaire. Un biais ajoute ensuite une valeur à chaque sortie ; une fonction non linéaire permet au réseau de représenter davantage qu'une succession de transformations linéaires.
+> [!warning] Une coordonnée n'est pas une étiquette
+> Dans un embedding appris, une dimension n'est généralement pas une catégorie lisible telle que « mécanique » ou « finance ». Le sens se distribue dans la représentation.
 
-## Comparer des directions
+## Transformer : le produit matriciel
 
-Le produit scalaire additionne les produits des coordonnées correspondantes. La norme euclidienne est la racine carrée de la somme des carrés. Pour deux vecteurs non nuls, la similarité cosinus divise le produit scalaire par le produit des normes.
+On multiplie chaque **ligne de X** par chaque **colonne de W**. Les dimensions intérieures doivent être identiques ; les dimensions extérieures donnent la forme du résultat.
 
-Pour u = (1, 0) et v = (2, 0), le cosinus vaut 1 : même direction, longueurs différentes. Pour u et w = (0, 1), il vaut 0. Un score 1 ne prouve pas que deux textes sont identiques ou vrais ; la signification dépend de la représentation apprise. Pour un vecteur nul, la formule est indéfinie : une implémentation doit choisir un comportement explicite.
+> [!formula] Règle des dimensions
+> (n × d) · (d × m) → (n × m)
 
-## Pourquoi cela aide à intégrer
+*n* est le nombre de lignes d'entrée, *d* la dimension d'entrée, *m* la dimension de sortie. Il s'agit d'un produit matriciel, pas d'une multiplication case par case.
 
-Si un index contient des vecteurs de 768 valeurs et que la nouvelle API renvoie 1 024 valeurs, la comparaison prévue ne fonctionne plus telle quelle. Même deux modèles de dimension identique peuvent utiliser des espaces incompatibles. Il faut conserver le modèle d'embedding, sa version et la préparation du texte avec l'index.
+### Exemple résolu : de deux entrées à deux sorties
+
+Prenons X = (2, 1). La matrice W contient deux lignes : (1, 3), puis (4, 0).
+
+| Sortie | Colonne de W | Calcul ligne × colonne | Résultat |
+| --- | --- | --- | --- |
+| Première | (1, 4) | 2 × 1 + 1 × 4 | **6** |
+| Seconde | (3, 0) | 2 × 3 + 1 × 0 | **6** |
+
+> [!formula] Résultat de la transformation
+> XW = (6, 6)
+
+Une couche peut ensuite ajouter un **biais** et appliquer une **fonction non linéaire**. Sans non-linéarités, empiler des transformations linéaires équivaut encore à une transformation linéaire.
+
+## Comparer : une direction plutôt qu'une longueur
+
+![Les vecteurs u = (1, 0) et v = (2, 0) ont la même direction : cosinus 1. Le vecteur w = (0, 1) est perpendiculaire à u : cosinus 0.](../Assets/vecteurs.svg)
+
+Le **produit scalaire** additionne les produits des coordonnées correspondantes. La **norme euclidienne** mesure la longueur. Pour deux vecteurs non nuls, la similarité cosinus normalise le produit scalaire par leurs longueurs.
+
+> [!formula] Produit scalaire, norme et cosinus
+> u · v = u₁v₁ + … + uₙvₙ
+>
+> ‖u‖ = √(u₁² + … + uₙ²)
+>
+> cos(u, v) = (u · v) / (‖u‖ × ‖v‖)
+
+*uᵢ* et *vᵢ* désignent la coordonnée numéro *i*. Le symbole ‖u‖ désigne la norme de *u*. La somme porte sur toutes les coordonnées.
+
+| Vecteurs comparés | Produit scalaire | Produit des normes | Cosinus |
+| --- | --- | --- | --- |
+| (1, 0) et (2, 0) | 2 | 1 × 2 = 2 | **1** : même direction |
+| (1, 0) et (0, 1) | 0 | 1 × 1 = 1 | **0** : orthogonaux |
+| (1, 0) et (−1, 0) | −1 | 1 × 1 = 1 | **−1** : opposés |
+
+> [!warning] Un score ne prouve pas une vérité
+> Un cosinus élevé indique une proximité dans cet espace. Il ne garantit ni identité des textes, ni exactitude factuelle. Pour un vecteur nul, la formule est indéfinie : le logiciel doit traiter ce cas explicitement.
+
+## Appliquer : diagnostiquer un index incompatible
+
+Un index contient des vecteurs de **768 valeurs**. Une nouvelle API renvoie **1 024 valeurs**. La comparaison n'est pas définie telle quelle : les dimensions diffèrent.
+
+Même avec deux modèles de dimension identique, les espaces peuvent être incompatibles. Conserve avec l'index le **modèle**, sa **version** et la **préparation du texte**.
+
+> [!tip] Réflexe d'intégration
+> Vérifier les dimensions et la provenance → réencoder le corpus avec le nouveau modèle si nécessaire → mesurer la qualité de recherche sur des questions de référence avant la bascule.
 
 ## Exercice : calcul et diagnostic
 
-Calculer le produit scalaire et le cosinus de (1, 1) et (1, -1). Donner ensuite la forme du produit d'une matrice (10, 4) par une matrice (4, 3). Enfin, expliquer pourquoi tronquer arbitrairement un vecteur à la dimension de l'ancien index n'est pas une migration validée.
+- **A.** Calcule le produit scalaire, les deux normes et le cosinus de a = (1, 1) et b = (1, −1).
+- **B.** Donne la forme du produit d'une matrice (10, 4) par une matrice (4, 3). Combien de valeurs contient le résultat ?
+- **C.** Peut-on multiplier directement (10, 4) par (5, 3) ? Justifie.
+- **D.** Pourquoi tronquer un vecteur de 1 024 à 768 valeurs ne suffit-il pas à valider une migration ?
 
 > [!answer]- Repères de correction
-> Le produit scalaire vaut 0, donc le cosinus vaut 0 ; les normes sont toutes deux racine de 2. La forme du produit matriciel est (10, 3). Tronquer change la représentation et ne démontre aucune compatibilité sémantique : il faut vérifier le modèle, réindexer si nécessaire et comparer la recherche sur un jeu de référence.
+> **A — Produit scalaire** : 1 × 1 + 1 × (−1) = 0. Chaque norme vaut √(1² + 1²) = √2. Le cosinus vaut donc 0 / (√2 × √2) = **0**. Les vecteurs sont orthogonaux.
+>
+> **B — Dimensions** : les dimensions intérieures valent 4, le produit est défini. Les dimensions extérieures donnent **(10, 3)**, soit **30 valeurs**.
+>
+> **C — Incompatibilité** : les dimensions intérieures 4 et 5 diffèrent. Ce produit matriciel n'est pas défini ; changer seulement l'étiquette des axes ne corrige pas les données.
+>
+> **D — Migration** : tronquer change la représentation sans garantir que ses coordonnées correspondent à celles de l'ancien modèle. Certains modèles sont spécifiquement entraînés pour une réduction de dimension, mais cela ne rend pas deux modèles interchangeables. Vérifier la méthode supportée, réencoder le corpus si nécessaire et comparer la recherche sur un jeu de référence.
+>
+> **Autoévaluation** : un point par réponse, avec calcul ou justification. Revoir les dimensions si B ou C est faux, le cosinus si A est faux, et la provenance des embeddings si D est faux.
 
 ## Sources et portée
 
-Sources consultées le 12 novembre 2026. Calculs et situations d'intégration originaux ; les dimensions sont pédagogiques.
+Sources consultées le 12 novembre 2026. Calculs et schéma originaux ; dimensions pédagogiques. Cette fiche couvre les opérations de base, pas une théorie complète de l'algèbre linéaire.
 
 - [NumPy — Produit matriciel](https://numpy.org/doc/stable/reference/generated/numpy.matmul.html)
 - [scikit-learn — Similarité cosinus](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.pairwise.cosine_similarity.html)
+- [OpenStax — Matrices and Matrix Operations](https://openstax.org/books/algebra-and-trigonometry-2e/pages/11-5-matrices-and-matrix-operations)

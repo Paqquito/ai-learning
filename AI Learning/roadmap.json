@@ -1,0 +1,608 @@
+{
+  "version": 1,
+  "updated": "2026-11-12",
+  "principle": "Intégrer, puis auditer, puis adapter. Les cours disponibles sont introductifs ; ce programme reste évolutif.",
+  "domains": [
+    {
+      "id": "panorama",
+      "courses": [
+        {
+          "title": "Histoire de l'IA et grandes familles"
+        },
+        {
+          "title": "IA symbolique, statistique et générative"
+        },
+        {
+          "title": "Capacités, limites et hallucinations"
+        },
+        {
+          "title": "Du besoin métier à la tâche mesurable"
+        },
+        {
+          "title": "Panorama des métiers de l'ingénierie IA"
+        },
+        {
+          "title": "Lire un article scientifique et une model card"
+        },
+        {
+          "title": "Construire une veille et vérifier une annonce"
+        }
+      ]
+    },
+    {
+      "id": "maths",
+      "courses": [
+        {
+          "title": "Probabilités conditionnelles et théorème de Bayes"
+        },
+        {
+          "title": "Statistiques descriptives et échantillonnage"
+        },
+        {
+          "title": "Dérivées, gradients et règle de la chaîne"
+        },
+        {
+          "title": "Optimisation et descente de gradient"
+        },
+        {
+          "title": "Entropie, cross-entropy et divergence KL"
+        },
+        {
+          "title": "Normes, distances et espaces de représentation"
+        },
+        {
+          "title": "Valeurs propres, SVD et réduction de dimension"
+        },
+        {
+          "title": "Estimation, incertitude et intervalles de confiance"
+        }
+      ]
+    },
+    {
+      "id": "software",
+      "courses": [
+        {
+          "title": "Python pratique pour lire et vérifier du code généré"
+        },
+        {
+          "title": "Environnements Python, dépendances et reproductibilité"
+        },
+        {
+          "title": "Tests, Git et revue de code assistée"
+        },
+        {
+          "title": "Linux : processus, fichiers, droits et services"
+        },
+        {
+          "title": "Réseaux : IP, ports, DNS et routage"
+        },
+        {
+          "title": "HTTP, TLS, proxy et reverse proxy"
+        },
+        {
+          "title": "Authentification : clés, OAuth et comptes de service"
+        },
+        {
+          "title": "Asynchronisme, streaming et annulation"
+        },
+        {
+          "title": "SQL et conception d'une API métier"
+        },
+        {
+          "title": "Files de messages, reprises et idempotence"
+        }
+      ]
+    },
+    {
+      "id": "data",
+      "courses": [
+        {
+          "title": "Formats : JSON, CSV, Parquet et données non structurées"
+        },
+        {
+          "title": "Ingestion, nettoyage et validation des données"
+        },
+        {
+          "title": "ETL, ELT et pipelines incrémentaux"
+        },
+        {
+          "title": "Modélisation relationnelle et SQL pour l'IA"
+        },
+        {
+          "title": "Annotation, labels et désaccord entre annotateurs"
+        },
+        {
+          "title": "Versions, provenance et traçabilité des datasets"
+        },
+        {
+          "title": "Déduplication et prévention des fuites de données"
+        },
+        {
+          "title": "OCR et extraction de tableaux dans les PDF"
+        },
+        {
+          "title": "Données synthétiques et leurs limites"
+        },
+        {
+          "title": "Qualité, fraîcheur et cycle de vie de la donnée"
+        }
+      ]
+    },
+    {
+      "id": "ml",
+      "courses": [
+        {
+          "title": "Régression linéaire et logistique"
+        },
+        {
+          "title": "Arbres de décision et modèles d'ensemble"
+        },
+        {
+          "title": "Classification et déséquilibre des classes"
+        },
+        {
+          "title": "Clustering et segmentation"
+        },
+        {
+          "title": "Détection d'anomalies"
+        },
+        {
+          "title": "Séries temporelles et prévision"
+        },
+        {
+          "title": "Recommandation et ranking"
+        },
+        {
+          "title": "Feature engineering et pipelines tabulaires"
+        },
+        {
+          "title": "Validation croisée et sélection d'hyperparamètres"
+        }
+      ]
+    },
+    {
+      "id": "dl",
+      "courses": [
+        {
+          "title": "Neurone, couches et fonctions d'activation"
+        },
+        {
+          "title": "Rétropropagation pas à pas"
+        },
+        {
+          "title": "Construire une boucle d'entraînement PyTorch"
+        },
+        {
+          "title": "Optimiseurs, learning rate et schedulers"
+        },
+        {
+          "title": "Régularisation, dropout et normalisation"
+        },
+        {
+          "title": "CNN et apprentissage en vision"
+        },
+        {
+          "title": "Réseaux récurrents et séquences"
+        },
+        {
+          "title": "Apprentissage autosupervisé et contrastif"
+        },
+        {
+          "title": "Fondements de l'apprentissage par renforcement"
+        },
+        {
+          "title": "Diagnostiquer un entraînement qui diverge"
+        }
+      ]
+    },
+    {
+      "id": "models",
+      "courses": [
+        {
+          "title": "Tokenisation, vocabulaire et langues"
+        },
+        {
+          "title": "Embeddings et encodeurs de texte"
+        },
+        {
+          "title": "Positions, RoPE et fenêtre de contexte"
+        },
+        {
+          "title": "Modèles de diffusion et génération d'images"
+        },
+        {
+          "title": "Vision-language models et compréhension de documents"
+        },
+        {
+          "title": "Reconnaissance vocale et synthèse de parole"
+        },
+        {
+          "title": "Modèles vidéo et représentations du monde"
+        },
+        {
+          "title": "Modèles à espace d'états et architectures hybrides"
+        },
+        {
+          "title": "Raisonnement, test-time compute et limites"
+        },
+        {
+          "title": "Comparer les familles de modèles à poids ouverts"
+        }
+      ]
+    },
+    {
+      "id": "adapt",
+      "courses": [
+        {
+          "title": "Prompting, exemples et sorties structurées"
+        },
+        {
+          "title": "Constituer un dataset de fine-tuning"
+        },
+        {
+          "title": "Supervised fine-tuning et masquage de la perte"
+        },
+        {
+          "title": "QLoRA : méthode, mémoire et compromis"
+        },
+        {
+          "title": "Préentraînement et continued pretraining"
+        },
+        {
+          "title": "Instruction tuning et préférences humaines"
+        },
+        {
+          "title": "DPO, RLHF et méthodes d'alignement"
+        },
+        {
+          "title": "Distillation de connaissances"
+        },
+        {
+          "title": "Entraînement distribué : DDP, FSDP et ZeRO"
+        },
+        {
+          "title": "Évaluer, versionner et déployer un adaptateur"
+        },
+        {
+          "title": "Entraîner un petit modèle depuis zéro"
+        }
+      ]
+    },
+    {
+      "id": "inference",
+      "courses": [
+        {
+          "title": "Préfill, décodage et cache KV"
+        },
+        {
+          "title": "Batching continu et concurrence"
+        },
+        {
+          "title": "Formats de poids et compatibilité des runtimes"
+        },
+        {
+          "title": "Servir un modèle avec llama.cpp"
+        },
+        {
+          "title": "Servir un modèle avec vLLM"
+        },
+        {
+          "title": "Exécuter et comparer des modèles avec Ollama"
+        },
+        {
+          "title": "Décodage : température, top-p et contraintes"
+        },
+        {
+          "title": "Décodage spéculatif"
+        },
+        {
+          "title": "Caches de prompts et routage de modèles"
+        },
+        {
+          "title": "Tensor parallelism, pipeline parallelism et offloading"
+        },
+        {
+          "title": "Mesurer TTFT, débit et latence sous charge"
+        }
+      ]
+    },
+    {
+      "id": "infra",
+      "courses": [
+        {
+          "title": "NPU, accélérateurs et mémoire unifiée"
+        },
+        {
+          "title": "RTX 4070 12 Go : laboratoire et limites mesurées"
+        },
+        {
+          "title": "NVIDIA : CUDA et choix d'un GPU"
+        },
+        {
+          "title": "AMD : ROCm et contraintes de compatibilité"
+        },
+        {
+          "title": "Apple Silicon et Mac Studio pour l'IA locale"
+        },
+        {
+          "title": "DGX Spark : architecture et cas d'usage"
+        },
+        {
+          "title": "Serveur Xeon : inférence CPU et services annexes"
+        },
+        {
+          "title": "PCIe, NVLink, réseau et transferts de données"
+        },
+        {
+          "title": "Stockage, IOPS et chargement des modèles"
+        },
+        {
+          "title": "Dimensionner un serveur pour plusieurs utilisateurs"
+        },
+        {
+          "title": "Cloud GPU, location et hébergement sur site"
+        },
+        {
+          "title": "Kubernetes : ressources GPU et orchestration"
+        },
+        {
+          "title": "Haute disponibilité, capacité et consommation électrique"
+        }
+      ]
+    },
+    {
+      "id": "rag",
+      "courses": [
+        {
+          "title": "Découpage de documents et métadonnées"
+        },
+        {
+          "title": "Recherche lexicale, BM25 et recherche hybride"
+        },
+        {
+          "title": "Index vectoriels et recherche approchée"
+        },
+        {
+          "title": "Reranking et sélection des passages"
+        },
+        {
+          "title": "Construire une réponse sourcée et une abstention"
+        },
+        {
+          "title": "Contrôle d'accès dans la recherche documentaire"
+        },
+        {
+          "title": "Évaluer séparément retrieval et génération"
+        },
+        {
+          "title": "Knowledge graphs : entités, relations et requêtes"
+        },
+        {
+          "title": "GraphRAG : parcours, synthèses et compromis"
+        },
+        {
+          "title": "Recherche multimodale et documents complexes"
+        },
+        {
+          "title": "Actualiser, supprimer et réindexer des documents"
+        }
+      ]
+    },
+    {
+      "id": "agents",
+      "courses": [
+        {
+          "title": "Concevoir un contrat d'outil et un schéma JSON"
+        },
+        {
+          "title": "Construire un harness minimal testable"
+        },
+        {
+          "title": "Gestion du contexte et budgets de tokens"
+        },
+        {
+          "title": "Mémoire de travail, mémoire persistante et provenance"
+        },
+        {
+          "title": "Implémenter un serveur et un client MCP"
+        },
+        {
+          "title": "Authentification et autorisations MCP"
+        },
+        {
+          "title": "Écrire, tester et maintenir un skill"
+        },
+        {
+          "title": "Plugins et extensions des assistants : compatibilité"
+        },
+        {
+          "title": "Agent de code : dépôt, terminal et tests"
+        },
+        {
+          "title": "Isolation du code et sandbox d'exécution"
+        },
+        {
+          "title": "Planification, réflexion et critères d'arrêt"
+        },
+        {
+          "title": "Systèmes multi-agents et coordination"
+        },
+        {
+          "title": "Validation humaine et reprise d'une exécution"
+        },
+        {
+          "title": "Automatisation navigateur et ordinateur"
+        },
+        {
+          "title": "Intégrer messagerie, tickets et outils métier"
+        },
+        {
+          "title": "Workflows durables, planification et événements"
+        }
+      ]
+    },
+    {
+      "id": "eval",
+      "courses": [
+        {
+          "title": "Jeux de référence et critères d'acceptation"
+        },
+        {
+          "title": "Matrice de confusion, précision, rappel et F1"
+        },
+        {
+          "title": "Évaluer extraction et sorties structurées"
+        },
+        {
+          "title": "Évaluer citations, factualité et abstention"
+        },
+        {
+          "title": "LLM-as-a-judge : calibration et biais"
+        },
+        {
+          "title": "Évaluer les outils et trajectoires d'un agent"
+        },
+        {
+          "title": "Tests adversariaux et robustesse"
+        },
+        {
+          "title": "Tests de charge et reproductibilité"
+        },
+        {
+          "title": "Comparaisons statistiques et tests A/B"
+        },
+        {
+          "title": "Régression et validation avant mise en production"
+        }
+      ]
+    },
+    {
+      "id": "ops",
+      "courses": [
+        {
+          "title": "CI/CD pour prompts, modèles et applications"
+        },
+        {
+          "title": "Déploiement progressif, canary et rollback"
+        },
+        {
+          "title": "Métriques, logs et traces distribuées"
+        },
+        {
+          "title": "Budgets de tokens, coûts et quotas"
+        },
+        {
+          "title": "SLO, disponibilité et gestion des incidents"
+        },
+        {
+          "title": "Versionner prompts, outils, données et modèles"
+        },
+        {
+          "title": "Sauvegarde, restauration et reprise d'activité"
+        },
+        {
+          "title": "Surveiller dérive des données et qualité métier"
+        },
+        {
+          "title": "Gestion des secrets et configuration par environnement"
+        },
+        {
+          "title": "Maintenance, runbooks et transfert à l'exploitation"
+        }
+      ]
+    },
+    {
+      "id": "security",
+      "courses": [
+        {
+          "title": "Modèle de menace d'une application IA"
+        },
+        {
+          "title": "Prompt injection directe et indirecte"
+        },
+        {
+          "title": "Exfiltration, outils et contrôle des sorties réseau"
+        },
+        {
+          "title": "Moindre privilège, RBAC et ABAC"
+        },
+        {
+          "title": "Isolation des clients et cloisonnement des données"
+        },
+        {
+          "title": "Données personnelles, minimisation et rétention"
+        },
+        {
+          "title": "RGPD et AI Act : obligations à vérifier par usage"
+        },
+        {
+          "title": "Licences des modèles, données et logiciels"
+        },
+        {
+          "title": "Chaîne d'approvisionnement et dépendances"
+        },
+        {
+          "title": "Audit, traçabilité et gestion des accès"
+        },
+        {
+          "title": "Déploiement hors ligne et environnement isolé"
+        }
+      ]
+    },
+    {
+      "id": "consulting",
+      "courses": [
+        {
+          "title": "Conduire un entretien de découverte client"
+        },
+        {
+          "title": "Cartographier processus, acteurs et exceptions"
+        },
+        {
+          "title": "Prioriser les cas d'usage par valeur et risque"
+        },
+        {
+          "title": "Choisir entre règles, workflow, agent et absence d'IA"
+        },
+        {
+          "title": "Construire un catalogue tâche, modèle et infrastructure"
+        },
+        {
+          "title": "Calculer TCO, ROI et coût du contrôle humain"
+        },
+        {
+          "title": "Comparer abonnement, location GPU et hébergement interne"
+        },
+        {
+          "title": "Rédiger une architecture cible et un dossier de décision"
+        },
+        {
+          "title": "Cadrer un POC, un pilote et une recette"
+        },
+        {
+          "title": "Conduite du changement et adoption"
+        },
+        {
+          "title": "Avant-vente, restitution et limites d'engagement"
+        },
+        {
+          "title": "Portfolio et pratiques du Forward Deployed Engineer"
+        }
+      ]
+    }
+  ],
+  "cases": [
+    "Classer des demandes support avec abstention",
+    "Extraire des champs de documents avec validation",
+    "Rechercher dans une documentation interne confidentielle",
+    "Construire un assistant de code avec outils et tests",
+    "Automatiser un processus administratif avec approbation",
+    "Intégrer un service de modèles imposé sans administrer l'inférence",
+    "Dimensionner une plateforme IA pour des utilisateurs concurrents",
+    "Comparer API, location GPU et infrastructure interne",
+    "Adapter un petit modèle et mesurer le gain réel",
+    "Traiter un incident de sécurité ou de qualité d'un agent",
+    "Interroger un graphe de pièces, exigences et documents industriels",
+    "Auditer une entreprise et présenter une feuille de route chiffrée"
+  ]
+}

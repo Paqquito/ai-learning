@@ -13,14 +13,32 @@ export function renderMarkdown(source, lessons) {
       })
       .replace(/\[([^\]]+)\]\((https:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1 ↗</a>')
       .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-      .replace(/`([^`]+)`/g, '<code>$1</code>');
+      .replace(/`([^`]+)`/g, '<code>$1</code>')
+      .replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, '<em>$1</em>');
   }
-  let output = [], paragraph = [], list = [], code = null, correction = null;
-  const closeCorrection = () => { output.push(`<details class="correction"><summary>Dévoiler les repères de correction</summary>${renderMarkdown(correction.join('\n'),lessons)}</details>`);correction=null; };
+  let output = [], paragraph = [], list = [], code = null, correction = null, calloutType = 'answer', calloutTitle = '', table = [];
+  const closeCorrection = () => {
+    const body=renderMarkdown(correction.join('\n'),lessons);
+    output.push(calloutType==='answer'
+      ? `<details class="correction"><summary>Dévoiler le corrigé expliqué</summary>${body}</details>`
+      : `<aside class="callout callout-${calloutType}"><p class="callout-title">${escapeHtml(calloutTitle)}</p>${body}</aside>`);
+    correction=null;
+  };
+  const closeTable = () => {
+    if(!table.length)return;
+    const cells=line=>line.trim().replace(/^\||\|$/g,'').split('|').map(s=>s.trim());
+    const rows=table.map(cells),head=rows.shift();
+    if(rows[0]?.every(c=>/^:?-{3,}:?$/.test(c)))rows.shift();
+    output.push(`<div class="table-scroll" tabindex="0" role="region" aria-label="Tableau du cours"><table><thead><tr>${head.map(c=>`<th scope="col">${inline(c)}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${inline(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`);
+    table=[];
+  };
   const flush = () => { if (paragraph.length) output.push(`<p>${inline(paragraph.join(' '))}</p>`); paragraph=[]; if(list.length) output.push(`<ul>${list.map(s=>`<li>${inline(s)}</li>`).join('')}</ul>`);list=[]; };
   for (const line of source.split(/\r?\n/)) {
-    if(correction!==null){if(line.startsWith('> ')){correction.push(line.slice(2));continue;}closeCorrection();}
-    if(code===null&&line==='> [!answer]- Repères de correction'){flush();correction=[];continue;}
+    if(correction!==null){if(/^>( |$)/.test(line)){correction.push(line.slice(2));continue;}closeCorrection();}
+    const callout=code===null&&line.match(/^> \[!(answer|abstract|tip|warning|example|formula)\]-?\s*(.*)$/);
+    if(callout){flush();closeTable();correction=[];calloutType=callout[1];calloutTitle=callout[2];continue;}
+    if(code===null&&line.trim().startsWith('|')){flush();table.push(line);continue;}
+    closeTable();
     if(line.startsWith('```')) { if(code !== null){output.push(`<pre><code>${escapeHtml(code.join('\n'))}</code></pre>`);code=null;}else{flush();code=[];}continue; }
     if(code!==null){code.push(line);continue;}
     const heading=line.match(/^(#{1,3}) (.+)$/);
@@ -30,12 +48,12 @@ export function renderMarkdown(source, lessons) {
   }
   if(code!==null) throw new Error('Bloc de code non fermé');
   if(correction!==null)closeCorrection();
-  flush();return output.join('\n');
+  flush();closeTable();return output.join('\n');
 }
 export async function loadContent(root) {
   const vault=path.join(root,'AI Learning');
   const readJson=async name=>JSON.parse(await readFile(path.join(vault,name),'utf8'));
-  const catalog=await readJson('catalog.json'),quiz=await readJson('quiz.json'),caseStudy=await readJson('case.json');
+  const catalog=await readJson('catalog.json'),quiz=await readJson('quiz.json'),caseStudy=await readJson('case.json'),roadmap=await readJson('roadmap.json');
   const ids=new Set(catalog.lessons.map(l=>l.id)),domains=new Set(catalog.domains.map(d=>d.id));
   if(ids.size!==catalog.lessons.length)throw new Error('Identifiants de cours dupliqués');
   const lessons=await Promise.all(catalog.lessons.map(async l=>{
@@ -44,10 +62,24 @@ export async function loadContent(root) {
     if(!resolved.startsWith(path.resolve(vault)+path.sep))throw new Error('Chemin de cours interdit');
     const md=await readFile(resolved,'utf8');
     const links=[...md.matchAll(/\[\[([^\]]+)\]\]/g)].map(m=>catalog.lessons.find(x=>x.title===m[1])?.id);
-    return {...l,html:renderMarkdown(md,catalog.lessons),links:[...new Set(links)]};
+    const exercises=md.split(/^## /m).filter(section=>/^(Exercice|Expérience|Passer à l'action)/.test(section));
+    if(!exercises.length||exercises.some(section=>!section.includes('> [!answer]-')))throw new Error(`Exercice sans corrigé : ${l.id}`);
+    const toc=[];
+    const html=renderMarkdown(md,catalog.lessons).replace(/<h2>(.*?)<\/h2>/g,(_,title)=>{
+      const sectionId=`section-${toc.length+1}`;
+      const plainTitle=title.replace(/<[^>]*>/g,'').replace(/&(amp|lt|gt|quot|#39);/g,(_,entity)=>({amp:'&',lt:'<',gt:'>',quot:'"','#39':"'"}[entity]));
+      toc.push({id:sectionId,title:plainTitle});
+      const kind=/Exercice|Expérience|action/.test(title)?'exercise':/Sources?|documentaire/.test(title)?'sources':/sauras|Objectifs/.test(title)?'objectives':'concept';
+      return `<h2 id="${sectionId}" class="section-${kind}" tabindex="-1"><span class="section-number" aria-hidden="true">${String(toc.length).padStart(2,'0')}</span>${title}</h2>`;
+    });
+    return {...l,html,toc,exerciseCount:exercises.length,links:[...new Set(links)]};
   }));
   if(catalog.path.some(id=>!ids.has(id)))throw new Error('Parcours invalide');
   if(new Set(quiz.questions.map(q=>q.id)).size!==quiz.questions.length)throw new Error('Questions dupliquées');
   for(const q of quiz.questions)if(!ids.has(q.lessonId)||!Number.isInteger(q.answer)||q.answer<0||q.answer>=q.options.length||q.explanations.length!==q.options.length)throw new Error(`Question invalide : ${q.id}`);
-  return {domains:catalog.domains,lessons,path:catalog.path,quiz,caseStudy};
+  for(const d of roadmap.domains){
+    if(!domains.has(d.id)||!d.courses.length)throw new Error('Domaine du programme invalide');
+    for(const c of d.courses)if(c.lessonId&&!ids.has(c.lessonId))throw new Error('Cours du programme inconnu');
+  }
+  return {domains:catalog.domains,lessons,path:catalog.path,quiz,caseStudy,roadmap};
 }

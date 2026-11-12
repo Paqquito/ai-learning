@@ -1,37 +1,90 @@
 import {esc} from './views.js';
-export function mountGraph(data){
+
+export function graphEdges(lessons){
+ const seen=new Set(),edges=[];
+ for(const l of lessons)for(const id of l.links){
+  const key=[l.id,id].sort().join(':');
+  if(id!==l.id&&!seen.has(key)){seen.add(key);edges.push([l.id,id]);}
+ }
+ return edges;
+}
+
+// Seeded positions + spring attraction + repulsion + label-box collision.
+// Static settling avoids continuous animation and motion sensitivity.
+export function layoutGraph(lessons,edges){
+ const nodes=lessons.map((l,i)=>({...l,x:600+350*Math.cos(i*2.399),y:400+260*Math.sin(i*2.399),vx:0,vy:0}));
+ const map=new Map(nodes.map(n=>[n.id,n]));
+ for(let step=0;step<500;step++){
+  for(const n of nodes){n.vx+=(600-n.x)*.002;n.vy+=(400-n.y)*.002;}
+  for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){
+   const a=nodes[i],b=nodes[j],dx=b.x-a.x||.01,dy=b.y-a.y||.01,d2=Math.max(100,dx*dx+dy*dy),dist=Math.sqrt(d2),force=6500/d2;
+   a.vx-=dx/dist*force;b.vx+=dx/dist*force;a.vy-=dy/dist*force;b.vy+=dy/dist*force;
+   const ox=180-Math.abs(dx),oy=84-Math.abs(dy);
+   if(ox>0&&oy>0){
+    if(ox<oy){const f=Math.sign(dx)*ox*.09;a.vx-=f;b.vx+=f;}
+    else{const f=Math.sign(dy)*oy*.09;a.vy-=f;b.vy+=f;}
+   }
+  }
+  for(const [from,to] of edges){const a=map.get(from),b=map.get(to);if(!a||!b)continue;
+   const dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy)||1,f=(d-215)*.003;
+   a.vx+=dx/d*f;b.vx-=dx/d*f;a.vy+=dy/d*f;b.vy-=dy/d*f;
+  }
+  for(const n of nodes){n.vx*=.65;n.vy*=.65;n.x=Math.max(100,Math.min(1100,n.x+n.vx));n.y=Math.max(40,Math.min(730,n.y+n.vy));}
+ }
+ return map;
+}
+const labels={
+ systeme:'Du modèle au système',llm:'Comprendre un LLM',workflow:'Workflow ou agent',harness:'Le rôle du harness',mcp:'Situer MCP',evaluation:'Évaluer une intégration',
+ api:'API de modèle',materiel:'CPU, GPU, RAM et VRAM',memoire:'Mémoire et quantification',outils:'Appeler des outils','rag-doc':'Embeddings et RAG',graphe:'Graphe de données',
+ confidentialite:'Données confidentielles','choix-modele':'Choisir un modèle',vecteurs:'Vecteurs et matrices',apprentissage:'Gradients et apprentissage',
+ transformer:'Transformer et attention',moe:'Modèles MoE',jepa:'JEPA',lora:'Fine-tuning et LoRA',docker:'Docker et services IA',extensions:'MCP, skills et plugins',audit:'Audit de processus',observabilite:'Observabilité'
+};
+function wrap(text){const lines=[''];for(const word of text.split(' ')){const i=lines.length-1;if(lines[i].length+word.length>21&&lines[i])lines.push(word);else lines[i]+=(lines[i]?' ':'')+word;}return lines;}
+
+export function mountGraph(data,initial){
  const svg=document.querySelector('#knowledge-graph'),detail=document.querySelector('#graph-detail');
- let zoom=1,pan={x:0,y:0},drag=null,moved=false;
- const shorten=s=>s.replace('Matériel et infrastructure','Infrastructure').replace('Informatique et réseaux','Informatique / réseau').replace('Modèles et architectures','Modèles').replace('Entraînement et adaptation','Adaptation').replace('Production et exploitation','Production').replace('Sécurité et gouvernance','Sécurité').replace('Agents et intégrations','Agents / intégration').replace('Évaluation et fiabilité','Évaluation');
- const positions=new Map();
- svg.classList.toggle('compact-labels',data.lessons.length>18);
- const lessonLabels={'systeme':'Système IA','llm':'LLM','workflow':'Workflow / agent','harness':'Harness','mcp':'MCP','evaluation':'Évaluation','api':'API de modèle','materiel':'CPU / GPU','memoire':'Mémoire / quantification','outils':'Appels d’outils','rag-doc':'RAG documentaire','graphe':'Graphe de données','confidentialite':'Confidentialité','choix-modele':'Choix du modèle'};
- Object.assign(lessonLabels,{'vecteurs':'Vecteurs / matrices','apprentissage':'Apprentissage','transformer':'Transformer','moe':'MoE','jepa':'JEPA','lora':'Fine-tuning / LoRA','docker':'Docker','extensions':'Skills / plugins','audit':'Audit de processus','observabilite':'Observabilité'});
- const label=n=>{const p=positions.get(n.id),side=n.type==='lesson'?(p.x>500?1:p.x<460?-1:0):0;return `<text x="${side*14}" y="${n.type==='lesson'?(side?4:(p.y<320?-17:27)):27}" text-anchor="${side>0?'start':side<0?'end':'middle'}">${esc(lessonLabels[n.id]||shorten(n.title))}</text>`;};
- data.domains.forEach((d,i)=>{const a=(i/data.domains.length)*Math.PI*2-Math.PI/2;positions.set(d.id,{x:480+345*Math.cos(a),y:320+245*Math.sin(a)});});
- data.lessons.forEach((l,i)=>{const a=(i/data.lessons.length)*Math.PI*2-Math.PI/2;positions.set(l.id,{x:480+150*Math.cos(a),y:320+125*Math.sin(a)});});
- function transform(){svg.querySelector('#graph-scene')?.setAttribute('transform',`translate(${480+pan.x} ${320+pan.y}) scale(${zoom}) translate(-480 -320)`);}
- function select(key){
-  svg.querySelectorAll('[data-node]').forEach(n=>n.classList.toggle('selected',n.dataset.node===key));
-  const lesson=data.lessons.find(l=>l.id===key);
-  if(lesson){detail.innerHTML=`<p class="eyebrow">FICHE DISPONIBLE</p><h2>${esc(lesson.title)}</h2><p>${esc(lesson.summary)}</p><p class="hint">${lesson.minutes} min · introduction</p><a class="button" href="#learn/${lesson.id}">Ouvrir la fiche →</a><h3>Reliée à</h3>${lesson.links.map(id=>{const l=data.lessons.find(l=>l.id===id);return `<p><a href="#learn/${id}">${esc(l.title)} ↗</a></p>`;}).join('')}`;}
-  else {const d=data.domains.find(d=>d.id===key),lessons=data.lessons.filter(l=>l.domain===key);detail.innerHTML=`<p class="eyebrow">DOMAINE · ${lessons.length?'COUVERTURE PARTIELLE':'À RÉDIGER'}</p><h2>${esc(d.title)}</h2><ul>${d.topics.map(t=>`<li>${esc(t)}</li>`).join('')}</ul>${lessons.map(l=>`<p><a href="#learn/${l.id}">${esc(l.title)} ↗</a></p>`).join('')||'<p class="hint">Ces sujets sont inventoriés. Leurs cours seront ajoutés progressivement.</p>'}`;}
+ const edges=graphEdges(data.lessons),positions=layoutGraph(data.lessons,edges);
+ let zoom=1,pan={x:0,y:0},drag=null,moved=false,selected=null,visible=new Set(data.lessons.map(l=>l.id));
+ function transform(){svg.querySelector('#graph-scene')?.setAttribute('transform',`translate(${600+pan.x} ${400+pan.y}) scale(${zoom}) translate(-600 -400)`);}
+ function highlight(){
+  const neighbors=new Set(selected?[selected,...edges.filter(e=>e.includes(selected)).flat()]:[]);
+  svg.querySelectorAll('[data-node]').forEach(n=>{n.classList.toggle('selected',n.dataset.node===selected);n.classList.toggle('faded',!!selected&&!neighbors.has(n.dataset.node));n.setAttribute('aria-pressed',String(n.dataset.node===selected));});
+  svg.querySelectorAll('[data-edge]').forEach(n=>{n.classList.toggle('active',n.dataset.edge.split(':').includes(selected));n.classList.toggle('faded',!!selected&&!n.dataset.edge.split(':').includes(selected));});
+ }
+ function select(id){
+  selected=id;highlight();const l=data.lessons.find(l=>l.id===id);if(!l)return;
+  const neighbors=[...new Set(edges.filter(e=>e.includes(id)).flat())].filter(key=>key!==id);
+  detail.innerHTML=`<div><p class="eyebrow">${esc(data.domains.find(d=>d.id===l.domain).title)}</p><h2>${esc(l.title)}</h2><p>${esc(l.summary)}</p><a class="button" href="#learn/${id}">Ouvrir la fiche →</a></div><div><h3>${neighbors.length} connexions</h3><div class="connection-links">${neighbors.map(key=>`<a href="#learn/${key}">${esc(data.lessons.find(l=>l.id===key).title)}</a>`).join('')}</div></div>`;
+ }
+ function updateGeometry(){
+  for(const node of svg.querySelectorAll('[data-node]')){const p=positions.get(node.dataset.node);node.setAttribute('transform',`translate(${p.x} ${p.y})`);}
+  for(const line of svg.querySelectorAll('[data-edge]')){const [a,b]=line.dataset.edge.split(':').map(key=>positions.get(key));for(const [k,v] of Object.entries({x1:a.x,y1:a.y,x2:b.x,y2:b.y}))line.setAttribute(k,v);}
  }
  function draw(){
-  const available=document.querySelector('#graph-filter').value==='available';
-  const domains=data.domains.filter(d=>!available||data.lessons.some(l=>l.domain===d.id));
-  const edge=(a,b,kind)=>{const p=positions.get(a),q=positions.get(b);return `<line x1="${p.x}" y1="${p.y}" x2="${q.x}" y2="${q.y}" class="${kind}"/>`;};
-  const edges=new Set();
-  const links=data.lessons.flatMap(l=>[edge(l.domain,l.id,'domain-edge'),...l.links.filter(id=>{const k=[id,l.id].sort().join(':');if(edges.has(k))return false;edges.add(k);return true;}).map(id=>edge(l.id,id,'lesson-edge'))]).join('');
-  const nodes=[...domains.map(d=>({...d,type:'domain'})),...data.lessons.map(l=>({...l,type:'lesson'}))];
-  svg.innerHTML=`<g id="graph-scene"><g class="graph-lines">${links}</g>${nodes.map(n=>{const p=positions.get(n.id);return `<g class="graph-node ${n.type}" data-node="${n.id}" transform="translate(${p.x} ${p.y})" tabindex="0" role="button" aria-label="${esc(n.title)} : ${n.type==='domain'?'domaine':'fiche disponible'}"><title>${esc(n.title)}</title>${n.type==='domain'?'<circle r="9"/>':'<rect x="-8" y="-8" width="16" height="16" rx="3" transform="rotate(45)"/>'}${label(n)}</g>`;}).join('')}</g>`;
-  svg.querySelectorAll('[data-node]').forEach(node=>{node.addEventListener('click',()=>{if(!moved)select(node.dataset.node);});node.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();select(node.dataset.node);}});});transform();
+  const filter=document.querySelector('#graph-filter').value,focus=new Set(data.lessons.filter(l=>filter==='all'||l.domain===filter).map(l=>l.id));
+  visible=new Set([...focus,...edges.filter(e=>e.some(id=>focus.has(id))).flat()]);
+  const nodes=data.lessons.filter(l=>visible.has(l.id));
+  svg.innerHTML=`<g id="graph-scene"><g class="graph-lines">${edges.filter(e=>e.every(id=>visible.has(id))).map(e=>`<line class="lesson-edge" data-edge="${e.join(':')}"/>`).join('')}</g>${nodes.map(l=>`<g class="graph-node lesson" data-node="${l.id}" tabindex="0" role="button" aria-label="${esc(l.title)}" aria-pressed="false"><title>${esc(l.title)}</title><circle r="${6+Math.min(5,edges.filter(e=>e.includes(l.id)).length*.4)}"/><text text-anchor="middle">${wrap(labels[l.id]||l.title).map((s,i)=>`<tspan x="0" y="${25+i*19}">${esc(s)}</tspan>`).join('')}</text></g>`).join('')}</g>`;
+  svg.querySelectorAll('[data-node]').forEach(n=>{
+   n.addEventListener('click',()=>{if(!moved)select(n.dataset.node);});
+   n.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();select(n.dataset.node);}});
+  });
+  document.querySelector('#graph-count').textContent=`${nodes.length} cours visibles${filter==='all'?'':' : domaine et voisins directs'}. Les intitulés longs sont abrégés ; leur titre complet apparaît dans le détail.`;
+  if(selected&&!visible.has(selected)){selected=null;detail.innerHTML='<p>Sélectionne une fiche dans ce domaine.</p>';}
+  updateGeometry();transform();highlight();
  }
  document.querySelector('#graph-filter').addEventListener('change',draw);
- document.querySelector('#zoom-in').addEventListener('click',()=>{zoom=Math.min(3,zoom+.2);transform();});
- document.querySelector('#zoom-out').addEventListener('click',()=>{zoom=Math.max(.6,zoom-.2);transform();});
- document.querySelector('#zoom-reset').addEventListener('click',()=>{zoom=1;pan={x:0,y:0};transform();});
- svg.addEventListener('pointerdown',e=>{moved=false;if(e.target.closest('[data-node]'))return;drag={x:e.clientX,y:e.clientY,pan:{...pan}};svg.setPointerCapture(e.pointerId);});
- svg.addEventListener('pointermove',e=>{if(!drag)return;const rect=svg.getBoundingClientRect(),factor=Math.max(960/rect.width,640/rect.height);moved=Math.abs(e.clientX-drag.x)+Math.abs(e.clientY-drag.y)>4;pan={x:drag.pan.x+(e.clientX-drag.x)*factor,y:drag.pan.y+(e.clientY-drag.y)*factor};transform();});
- const stop=()=>drag=null;svg.addEventListener('pointerup',stop);svg.addEventListener('pointercancel',stop);draw();
+ document.querySelector('#zoom-in').addEventListener('click',()=>{zoom=Math.min(3,zoom+.25);transform();});
+ document.querySelector('#zoom-out').addEventListener('click',()=>{zoom=Math.max(.5,zoom-.25);transform();});
+ document.querySelector('#zoom-reset').addEventListener('click',()=>{zoom=1;pan={x:0,y:0};selected=null;transform();highlight();detail.innerHTML='<h2>Vue recentrée</h2><p>Sélectionne une fiche pour explorer ses connexions.</p>';});
+ const point=e=>{const p=new DOMPoint(e.clientX,e.clientY);return p.matrixTransform(svg.getScreenCTM().inverse());};
+ svg.addEventListener('pointerdown',e=>{if(e.button!==0)return;moved=false;const p=point(e),id=e.target.closest('[data-node]')?.dataset.node;drag={p,id,pan:{...pan},origin:id?{...positions.get(id)}:null};svg.setPointerCapture(e.pointerId);});
+ svg.addEventListener('pointermove',e=>{
+  if(!drag)return;const p=point(e),dx=p.x-drag.p.x,dy=p.y-drag.p.y;moved=moved||Math.abs(dx)+Math.abs(dy)>5;
+  if(drag.id){const n=positions.get(drag.id);n.x=drag.origin.x+dx/zoom;n.y=drag.origin.y+dy/zoom;updateGeometry();}
+  else{pan={x:drag.pan.x+dx,y:drag.pan.y+dy};transform();}
+ });
+ svg.addEventListener('pointerup',()=>{if(drag?.id&&!moved)select(drag.id);drag=null;});
+ svg.addEventListener('pointercancel',()=>drag=null);
+ draw();if(initial&&positions.has(initial))select(initial);
 }

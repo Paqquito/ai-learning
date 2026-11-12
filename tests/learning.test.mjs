@@ -10,7 +10,7 @@ const data=await loadContent(fileURLToPath(new URL('..',import.meta.url)));
 
 test('Les fiches et leurs prérequis forment un parcours exploitable',()=>{
  const visited=new Set();
- for(const id of data.path){const lesson=data.lessons.find(l=>l.id===id);assert.ok(lesson.prerequisites.every(p=>visited.has(p)),`Prérequis avant ${id}`);assert.ok(lesson.html.includes('<h2>'));assert.ok(lesson.html.includes('https://'));assert.ok(lesson.links.every(link=>data.lessons.some(l=>l.id===link)));visited.add(id);}
+ for(const id of data.path){const lesson=data.lessons.find(l=>l.id===id);assert.ok(lesson.prerequisites.every(p=>visited.has(p)),`Prérequis avant ${id}`);assert.ok(lesson.html.includes('<h2 '));assert.ok(lesson.html.includes('https://'));assert.ok(lesson.links.every(link=>data.lessons.some(l=>l.id===link)));visited.add(id);}
  assert.equal(visited.size,data.lessons.length);assert.equal(data.domains.length,16);
  assert.ok(data.lessons.every(l=>!data.domains.some(d=>d.id===l.id)),'Les nœuds de domaines et de cours doivent être distincts');
 });
@@ -45,7 +45,7 @@ test('Le schéma illustrant le cours existe et comporte une alternative textuell
 });
 
 test('Les nouveaux exercices ont un corrigé replié et leurs illustrations existent',async()=>{
- for(const lesson of data.lessons.slice(6)){
+ for(const lesson of data.lessons){
   assert.ok(lesson.html.includes('<details class="correction">'),lesson.id);
   assert.ok(!lesson.html.includes('<details class="correction" open'),lesson.id);
   for(const match of lesson.html.matchAll(/src="\.\/assets\/([^"]+)"/g)){

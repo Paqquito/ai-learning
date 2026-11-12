@@ -40,7 +40,13 @@ Le streaming livre une réponse par morceaux : il améliore la perception d'atte
 Sur papier, classer quatre incidents : nom DNS introuvable ; HTTP 401 ; réponse 200 avec catégorie inconnue ; timeout lors de la création du ticket. Pour chacun, écrire le composant à inspecter et une action de repli. Ne faire aucun appel à un service réel.
 
 > [!answer]- Repères de correction
-> vérifier DNS et réseau pour le premier ; authentification pour le second ; validation applicative pour le troisième ; état du ticket et mécanisme de déduplication pour le dernier. Remplacer le modèle ne résout pas les trois premiers problèmes de transport, d'accès ou de contrat.
+> **DNS introuvable** : inspecter nom, résolution et réseau. Mettre en attente ou transférer au traitement manuel ; changer de modèle ne répare pas le réseau.
+>
+> **HTTP 401** : vérifier l'identité de service et la validité de ses identifiants. Arrêter les répétitions identiques, signaler la configuration à corriger et ne jamais inscrire le secret dans les traces.
+>
+> **HTTP 200, catégorie inconnue** : le transport a réussi, mais la sortie viole le contrat métier. La rejeter, conserver un diagnostic minimal et demander une reprise bornée ou un traitement humain. Examiner le schéma, le prompt et les capacités du modèle avant de conclure.
+>
+> **Timeout de création** : l'action a pu réussir. Rechercher le résultat avec l'identifiant stable et reprendre de façon idempotente ; ne pas envoyer aveuglément une nouvelle création. Si l'état reste inconnu, transférer à un opérateur.
 
 ## À demander au fournisseur interne
 

@@ -6,6 +6,12 @@ Calculer un premier ordre de grandeur des poids, identifier la mémoire manquant
 
 ## Les poids ne sont qu'une partie du budget
 
+> [!formula] Poids bruts — stockage uniforme idéal
+> Mémoire (octets) = paramètres × bits par paramètre / 8
+
+> [!warning] Le budget complet est plus grand
+> Poids + cache KV + activations et espace de travail + réservations du moteur + autres usages de la carte. Vérifier le pic à la charge visée, pas seulement au chargement.
+
 Un paramètre est une valeur numérique apprise. Pour un stockage uniforme idéal, la mémoire brute des poids vaut : nombre de paramètres multiplié par bits par paramètre, divisé par huit. Pour un modèle fictif de 8 milliards de paramètres :
 
 - 16 bits : 16 milliards d'octets, soit 16 Go décimaux, environ 14,9 Gio.

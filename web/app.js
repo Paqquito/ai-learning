@@ -1,5 +1,7 @@
 import {emptyProgress,validateProgress,gradeQuiz,STORAGE_KEY} from './state.js';
-import * as views from './views.js';
+import * as baseViews from './views.js';
+import * as learningViews from './learning-views.js';
+const views={...baseViews,...learningViews};
 import {mountGraph} from './graph.js';
 
 const main=document.querySelector('main'),toast=document.querySelector('#toast');
@@ -9,9 +11,16 @@ function save(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(progress));r
 function download(name,value){const url=URL.createObjectURL(new Blob([JSON.stringify(value,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
 function on(id,event,handler){document.getElementById(id)?.addEventListener(event,handler);}
 function render(){
- const [page='home',id]=location.hash.slice(1).split('/');
- const nav=page==='learn'?'home':page;
+ const [rawPage,id,section]=location.hash.slice(1).split('/');
+ const page=rawPage||'home';
+ const nav=page==='learn'?'curriculum':page;
+ const routeKey=page+'/'+(id||'');
+ if(page==='learn'&&main.dataset.route===routeKey&&section){jumpTo(section);return;}
+ main.dataset.route=routeKey;
  document.querySelectorAll('[data-nav]').forEach(a=>{if(a.dataset.nav===nav)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+ const menu=document.querySelector('#menu-toggle');
+ menu.setAttribute('aria-expanded','false');document.querySelector('.sidebar').classList.remove('menu-open');
+ menu.textContent='Menu · '+(document.querySelector('[data-nav][aria-current]')?.textContent.trim().replace(/^\S+\s/,'')||'Navigation');
  if(page==='home'||!page)main.innerHTML=views.home(data,progress);
  else if(page==='library')main.innerHTML=views.library(data,progress);
  else if(page==='learn')main.innerHTML=views.lesson(data,progress,id);
@@ -19,15 +28,21 @@ function render(){
  else if(page==='case')main.innerHTML=views.caseView(data,progress);
  else if(page==='progress')main.innerHTML=views.progressView(data,progress);
  else if(page==='graph')main.innerHTML=views.graphView(data);
+ else if(page==='curriculum')main.innerHTML=views.curriculum(data,progress);
  else main.innerHTML=views.notFound();
  document.title=`${main.querySelector('h1')?.textContent||'Atlas'} · AI Learning`;
  main.focus({preventScroll:true});window.scrollTo({top:0,behavior:'instant'});
- if(page==='graph')mountGraph(data);
+ if(page==='graph')mountGraph(data,id);
+ if(page==='curriculum'&&id){const group=document.getElementById('domain-'+id);if(group){group.open=true;group.scrollIntoView();}}
+ if(page==='home'){const list=main.querySelector('.two-columns .lesson-list');if(list)list.outerHTML=views.pathSections(data,progress);}
+ if(page==='learn'&&section)jumpTo(section);
+ on('justify-text','change',e=>main.querySelector('.prose')?.classList.toggle('justified',e.target.checked));
  const filter=()=>{document.querySelector('#library-results').innerHTML=views.libraryResults(data,progress,document.querySelector('#search').value,document.querySelector('#domain-filter').value);};
  on('search','input',filter);on('domain-filter','change',filter);
  on('mark-read','click',e=>{const key=e.currentTarget.dataset.id;progress.read=progress.read.includes(key)?progress.read.filter(x=>x!==key):[...progress.read,key];save();e.currentTarget.textContent=progress.read.includes(key)?'Retirer la marque « lu »':'Marquer comme lu';notify(progress.read.includes(key)?'Lecture enregistrée. Passe à la pratique pour vérifier ta compréhension.':'Marque de lecture retirée.');});
  bindQuiz();bindCase();bindProgress();
 }
+function jumpTo(section){const target=document.getElementById(section);if(target&&main.contains(target)){target.scrollIntoView({block:'start'});target.focus({preventScroll:true});}}
 function bindQuiz(){
  on('quiz-form','submit',e=>{
   e.preventDefault();const form=e.currentTarget;if(form.dataset.graded)return;
@@ -56,7 +71,7 @@ function bindProgress(){
 async function start(){
  try{const response=await fetch('./content.json');if(!response.ok)throw new Error('Contenus indisponibles');data=await response.json();
   try{const stored=localStorage.getItem(STORAGE_KEY);if(stored)progress=validateProgress(JSON.parse(stored),data.lessons.map(l=>l.id),data.quiz.questions.length);}catch{notify('Progression locale non lisible. Les cours restent accessibles ; importe une sauvegarde si tu en as une.');}
-  render();window.addEventListener('hashchange',()=>{if(location.hash==='#main'){main.focus();return;}render();});
+  render();on('menu-toggle','click',e=>{const expanded=e.currentTarget.getAttribute('aria-expanded')!=='true';e.currentTarget.setAttribute('aria-expanded',String(expanded));document.querySelector('.sidebar').classList.toggle('menu-open',expanded);});window.addEventListener('hashchange',()=>{if(location.hash==='#main'){main.focus();return;}render();});
  }catch{main.innerHTML='<div class="empty"><h1>Impossible de charger les cours</h1><p>Vérifie que le site est servi avec npm run dev, puis recharge la page.</p><button class="button" id="reload">Réessayer</button></div>';on('reload','click',()=>location.reload());}
 }
 start();

@@ -35,7 +35,15 @@ Préparer des questions dont on connaît les passages attendus. Vérifier leur p
 Écrire trois petites procédures fictives, dont deux versions d'une même règle. Préparer six questions : deux explicites, deux reformulées, une ambiguë et une sans réponse. Retrouver d'abord les passages manuellement ; ce sera ta référence avant d'automatiser.
 
 > [!answer]- Repères de correction
-> indiquer la version qui fait autorité ; citer le passage exact ; demander une précision en cas d'ambiguïté ; signaler l'absence d'information quand elle manque. Si la source correcte n'est pas retrouvée, corriger la recherche avant d'allonger le prompt. Voir [[Évaluer une intégration]].
+> **Un corpus possible** : document A, version 1 archivée : « Le délai de remboursement est de 30 jours » ; document B, version 2 en vigueur : « Le délai de remboursement est de 15 jours après validation » ; document C, procédure accès : « Une demande de réinitialisation passe par le portail interne ». Les trois sont fictifs.
+>
+> **Deux questions explicites** : « Quel délai pour le remboursement ? » → 15 jours après validation, source B ; « Où demander une réinitialisation ? » → portail interne, source C.
+>
+> **Deux reformulations** : « Quand recevrai-je mon remboursement validé ? » → même passage B ; « J'ai perdu mon accès : par où commencer ? » → passage C si le contexte confirme qu'une réinitialisation est nécessaire, sinon demander une précision.
+>
+> **Question ambiguë** : « Quel est le délai ? » → demander de quel processus il s'agit. **Question sans réponse** : « Quel est le plafond de remboursement ? » → signaler que le corpus ne le précise pas.
+>
+> **Vérification** : citer B et sa version en vigueur, pas A. Si B n'est pas retrouvé, corriger la recherche avant d'allonger le prompt. Pour tes propres documents, produire la même grille question, passage, version et comportement attendu. Voir [[Évaluer une intégration]].
 
 ## Sources et portée
 

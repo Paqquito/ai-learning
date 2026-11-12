@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 360" role="img" aria-labelledby="title desc">
+<title id="title">La similarité cosinus compare les directions</title>
+<desc id="desc">u de coordonnées 1,0 et v de coordonnées 2,0 ont la même direction : cosinus 1. w de coordonnées 0,1 est perpendiculaire à u : cosinus 0.</desc>
+<defs><marker id="green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="none" stroke="#245b48"/></marker><marker id="orange" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="none" stroke="#a65535"/></marker></defs>
+<rect width="800" height="360" rx="16" fill="#edf0e6"/>
+<g font-family="system-ui,sans-serif" fill="#1e3029">
+<text x="32" y="42" font-size="18" font-weight="600">Même direction ≠ même longueur</text>
+<g stroke="#bdc9b9"><path d="M80 290V75M60 270H430"/><path d="M200 265V275M320 265V275M75 150H85"/></g>
+<path d="M80 270H320" stroke="#245b48" stroke-width="5" marker-end="url(#green)"/>
+<circle cx="200" cy="270" r="7" fill="#245b48" stroke="#edf0e6" stroke-width="3"/>
+<path d="M80 270V150" stroke="#a65535" stroke-width="4" marker-end="url(#orange)"/>
+<path d="M80 248H102V270" fill="none" stroke="#637068"/>
+<text x="60" y="303" font-size="14">0</text><text x="155" y="304" font-size="16">u = (1, 0)</text><text x="300" y="244" font-size="16">v = (2, 0)</text><text x="99" y="143" font-size="16">w = (0, 1)</text>
+<rect x="470" y="90" width="290" height="86" rx="8" fill="#fffefa"/>
+<text x="490" y="120" font-size="14">u et v : même direction</text><text x="490" y="153" font-size="23" font-family="Georgia,serif" font-style="italic">cos(u, v) = 1</text>
+<rect x="470" y="194" width="290" height="86" rx="8" fill="#fffefa"/>
+<text x="490" y="224" font-size="14">u et w : angle droit</text><text x="490" y="257" font-size="23" font-family="Georgia,serif" font-style="italic">cos(u, w) = 0</text>
+<text x="32" y="337" font-size="12" fill="#637068">Exemple en deux dimensions ; les embeddings en comportent souvent bien davantage.</text>
+</g></svg>

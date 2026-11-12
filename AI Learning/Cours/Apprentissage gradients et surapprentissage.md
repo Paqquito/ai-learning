@@ -14,7 +14,21 @@ Un gradient indique les dérivées de la perte par rapport aux paramètres. La r
 
 ## Un calcul à la main
 
-Prenons une prédiction y = w × x, avec x = 2, une cible de 6 et une perte L = (2w - 6)². Pour w = 1, la prédiction vaut 2 et la perte vaut 16. La dérivée vaut 4 × (2w - 6), soit -16. Avec un pas d'apprentissage de 0,1, la descente de gradient donne w suivant = 1 - 0,1 × (-16) = 2,6. La nouvelle prédiction vaut 5,2 et la perte 0,64.
+> [!formula] Descente de gradient — un paramètre
+> w suivant = w actuel − η × ∂L/∂w
+
+Le symbole *η* (êta) est le pas d'apprentissage ; ∂L/∂w est la dérivée de la perte par rapport au paramètre *w*.
+
+Prenons y = w × x, avec x = 2, une cible de 6 et une perte L = (2w − 6)². On part de w = 1 et d'un pas η = 0,1.
+
+| Étape | Calcul | Résultat |
+| --- | --- | --- |
+| Prédiction initiale | 1 × 2 | 2 |
+| Perte initiale | (2 − 6)² | 16 |
+| Dérivée de la perte | 4 × (2w − 6), avec w = 1 | −16 |
+| Mise à jour de w | 1 − 0,1 × (−16) | **2,6** |
+| Nouvelle prédiction | 2,6 × 2 | 5,2 |
+| Nouvelle perte | (5,2 − 6)² | **0,64** |
 
 Cet exemple convexe à un paramètre n'est pas un modèle réaliste de toute la difficulté d'un LLM. Il montre le rôle du signe et du pas : un pas trop grand peut faire dépasser la zone utile et déstabiliser l'entraînement.
 

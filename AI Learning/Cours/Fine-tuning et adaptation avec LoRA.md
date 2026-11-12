@@ -12,6 +12,16 @@ Ces approches peuvent se combiner. Si une procédure change chaque semaine, un a
 
 ## LoRA réduit les paramètres entraînés
 
+> [!formula] Adaptation de faible rang — écriture simplifiée
+> W adaptée = W base + BA
+
+Pour W de forme (d, k), B a la forme (d, r) et A la forme (r, k). Le rang *r* est choisi petit devant les grandes dimensions. Le facteur d'échelle n'est pas représenté ici.
+
+| Paramètres entraînés pour une matrice | Formule | Exemple : d = k = 4 096, r = 8 |
+| --- | --- | --- |
+| Matrice entière | d × k | 16 777 216 |
+| Adaptateurs A et B | r × k + d × r | 65 536 |
+
 Dans une adaptation complète, les poids sélectionnés du modèle sont directement mis à jour. LoRA garde les poids de base gelés et apprend, pour certaines matrices, une correction de faible rang. Une écriture simplifiée est W adaptée = W base + B × A, avec un facteur d'échelle omis ici pour la lisibilité.
 
 Pour une matrice carrée 4 096 × 4 096, une mise à jour complète concerne 16 777 216 valeurs. Avec un rang 8, A et B représentent ensemble 8 × 4 096 + 4 096 × 8 = 65 536 valeurs. Le calcul illustre un module seulement : les autres matrices, biais et éventuels modules entraînables dépendent de la configuration.
