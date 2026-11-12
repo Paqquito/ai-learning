@@ -44,6 +44,12 @@ Exécuter `npm run check`. Les limites et décisions sont décrites dans `docs/P
 
 ## Programme et présentation des cours
 
-Le catalogue complet est dans `AI Learning/Programme.md` et dans la page Programme de l’application. Il distingue les 24 introductions disponibles et les 169 cours à rédiger. Régénérer le fichier Obsidian avec `node scripts/programme.mjs` après une modification de `catalog.json` ou `roadmap.json`.
+Le catalogue complet est dans `AI Learning/Programme.md` et dans la page Programme de l’application. Il distingue les 40 cours disponibles et les 153 cours à rédiger. Régénérer le fichier Obsidian avec `node scripts/programme.mjs` après une modification de `catalog.json` ou `roadmap.json`.
 
 Le graphe relie les fiches disponibles par leurs liens internes. Chaque fiche propose un sommaire, un repère dans le parcours et un exercice corrigé. Les choix éditoriaux et les limites sont détaillés dans `docs/LEARNING-EXPERIENCE.md`. Après une modification des scripts du compilateur, redémarrer le serveur local pour charger leur nouvelle version.
+
+## Lecture et pratique dans le navigateur
+
+Le Web est le support principal : schémas agrandissables, réglages de lecture, formules MathML natives, trois modules pédagogiques interactifs et questions corrigées par fiche. Les réglages, brouillons et révisions restent locaux au navigateur. L’export de progression inclut les brouillons et le carnet ; il ne synchronise pas automatiquement les appareils.
+
+Les simulations calculent des exemples déterministes, sans appeler de modèle. Le calcul mémoire ne concerne que les poids théoriques et une réserve hypothétique, pas un dimensionnement complet.

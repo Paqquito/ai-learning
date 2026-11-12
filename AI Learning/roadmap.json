@@ -74,22 +74,10 @@
           "title": "Linux : processus, fichiers, droits et services"
         },
         {
-          "title": "Réseaux : IP, ports, DNS et routage"
-        },
-        {
-          "title": "HTTP, TLS, proxy et reverse proxy"
-        },
-        {
-          "title": "Authentification : clés, OAuth et comptes de service"
-        },
-        {
           "title": "Asynchronisme, streaming et annulation"
         },
         {
           "title": "SQL et conception d'une API métier"
-        },
-        {
-          "title": "Files de messages, reprises et idempotence"
         }
       ]
     },
@@ -354,25 +342,10 @@
       "id": "rag",
       "courses": [
         {
-          "title": "Découpage de documents et métadonnées"
-        },
-        {
-          "title": "Recherche lexicale, BM25 et recherche hybride"
-        },
-        {
           "title": "Index vectoriels et recherche approchée"
         },
         {
-          "title": "Reranking et sélection des passages"
-        },
-        {
-          "title": "Construire une réponse sourcée et une abstention"
-        },
-        {
           "title": "Contrôle d'accès dans la recherche documentaire"
-        },
-        {
-          "title": "Évaluer séparément retrieval et génération"
         },
         {
           "title": "Knowledge graphs : entités, relations et requêtes"
@@ -392,13 +365,7 @@
       "id": "agents",
       "courses": [
         {
-          "title": "Concevoir un contrat d'outil et un schéma JSON"
-        },
-        {
           "title": "Construire un harness minimal testable"
-        },
-        {
-          "title": "Gestion du contexte et budgets de tokens"
         },
         {
           "title": "Mémoire de travail, mémoire persistante et provenance"
@@ -428,9 +395,6 @@
           "title": "Systèmes multi-agents et coordination"
         },
         {
-          "title": "Validation humaine et reprise d'une exécution"
-        },
-        {
           "title": "Automatisation navigateur et ordinateur"
         },
         {
@@ -444,15 +408,6 @@
     {
       "id": "eval",
       "courses": [
-        {
-          "title": "Jeux de référence et critères d'acceptation"
-        },
-        {
-          "title": "Matrice de confusion, précision, rappel et F1"
-        },
-        {
-          "title": "Évaluer extraction et sorties structurées"
-        },
         {
           "title": "Évaluer citations, factualité et abstention"
         },
@@ -516,9 +471,6 @@
       "courses": [
         {
           "title": "Modèle de menace d'une application IA"
-        },
-        {
-          "title": "Prompt injection directe et indirecte"
         },
         {
           "title": "Exfiltration, outils et contrôle des sorties réseau"

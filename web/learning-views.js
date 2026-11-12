@@ -1,4 +1,5 @@
 import {esc,lessonRow,notFound} from './views.js';
+import {readingControls,lessonPractice} from './reading.js';
 
 export function curriculum(data,p){
  const count=data.roadmap.domains.reduce((n,d)=>n+d.courses.length,0)+data.lessons.length;
@@ -14,10 +15,10 @@ export function lesson(data,p,id){
  const domain=data.domains.find(d=>d.id===l.domain),idx=data.path.indexOf(id),previous=data.path[idx-1],next=data.path[idx+1];
  const link=(key,label)=>key?`<a class="button secondary" href="#learn/${key}">${label}</a>`:'';
  return `<nav class="breadcrumbs" aria-label="Fil d'Ariane"><a href="#home">Parcours</a><span>/</span><a href="#curriculum/${domain.id}">${esc(domain.title)}</a><span>/</span><span>Fiche ${idx+1} sur ${data.path.length}</span></nav>
- <div class="page-intro lesson-intro"><p class="eyebrow">${esc(domain.title)} · INTRODUCTION</p><h1>${esc(l.title)}</h1><p>${esc(l.summary)}</p><div class="lesson-meta"><span>${l.minutes} min de lecture indicative</span><span>${l.exerciseCount} exercice corrigé</span></div></div>
- <div class="reading-controls"><p>Comprendre → voir un exemple → essayer → vérifier</p><label><input type="checkbox" id="justify-text"> Justifier le texte</label></div>
- <div class="reading-layout"><article class="prose">${l.html}<div class="lesson-actions">${link(previous,'← Fiche précédente')}<button class="button" id="mark-read" data-id="${id}">${p.read.includes(id)?'Retirer la marque « lu »':'Marquer comme lu'}</button>${link(next,'Fiche suivante →')}</div><p class="hint">Les sources et leurs dates figurent en fin de fiche. « Lu » reste un repère de lecture, pas une validation de compétence.</p></article>
- <aside class="reading-aside lesson-toc"><h2>Dans cette fiche</h2><nav aria-label="Sommaire du cours">${l.toc.map((s,i)=>`<a href="#learn/${id}/${s.id}"><span>${String(i+1).padStart(2,'0')}</span>${esc(s.title)}</a>`).join('')}</nav><h2>Prérequis</h2>${l.prerequisites.length?l.prerequisites.map(key=>`<a href="#learn/${key}">${esc(data.lessons.find(l=>l.id===key).title)}</a>`).join(''):'<p>Aucun prérequis.</p>'}<h2>Pour pratiquer</h2><a href="#practice">QCM avec explications →</a><a href="#case">Cas support corrigé →</a><a href="#graph/${id}">Voir les connexions →</a></aside></div>`;
+ <div class="page-intro lesson-intro"><p class="lesson-category">${esc(domain.title)} · ${esc(l.format||'Comprendre')}</p><h1>${esc(l.title)}</h1><p>${esc(l.question||l.summary)}</p><div class="lesson-meta"><span>${l.minutes} min de lecture indicative</span><span>${l.exerciseCount} exercice${l.exerciseCount>1?'s':''} corrigé${l.exerciseCount>1?'s':''}</span></div></div>
+ ${readingControls()}
+ <div class="reading-key" aria-label="Repères de lecture"><span class="key-essential">À retenir</span><span class="key-example">Exemple</span><span class="key-warning">Point de vigilance</span><span class="key-method">Méthode</span></div><div class="reading-layout"><article class="prose">${l.html}${lessonPractice(data,l,p)}<div class="lesson-actions">${link(previous,'← Fiche précédente')}<button class="button" id="mark-read" data-id="${id}">${p.read.includes(id)?'Retirer la marque « lu »':'Marquer comme lu'}</button>${link(next,'Fiche suivante →')}</div><p class="hint">Les sources et leurs dates figurent en fin de fiche. « Lu » reste un repère de lecture, pas une validation de compétence.</p></article>
+ <aside class="reading-aside lesson-toc"><details class="lesson-toc-details" open><summary>Dans cette fiche</summary><nav aria-label="Sommaire du cours">${l.toc.map((s,i)=>`<a href="#learn/${id}/${s.id}"><span>${String(i+1).padStart(2,'0')}</span>${esc(s.title)}</a>`).join('')}<a href="#learn/${id}/practice-section">À toi de reconstruire</a></nav></details><h2>Prérequis</h2>${l.prerequisites.length?l.prerequisites.map(key=>`<a href="#learn/${key}">${esc(data.lessons.find(l=>l.id===key).title)}</a>`).join(''):'<p>Aucun prérequis.</p>'}<h2>Pour pratiquer</h2><a href="#practice">QCM avec explications →</a><a href="#case">Cas support corrigé →</a><a href="#graph/${id}">Voir les connexions →</a></aside></div>`;
 }
 
 export function graphView(data){
@@ -28,6 +29,6 @@ export function graphView(data){
 }
 
 export function pathSections(data,p){
- const groups=[['01','Comprendre le système',0,6],['02','Relier API, données et infrastructure',6,14],['03','Comprendre et adapter les modèles',14,20],['04','Intégrer, auditer et exploiter',20,24]];
+ const groups=[['01','Comprendre le système',0,6],['02','Relier API, données et infrastructure',6,14],['03','Comprendre et adapter les modèles',14,20],['04','Intégrer, auditer et exploiter',20,24],['05','Fiabiliser une intégration',24,30],['06','Construire un RAG et mesurer sa qualité',30,34],['07','Valider et exploiter une intégration',34,data.path.length]];
  return `<p><a class="text-link" href="#curriculum">Programme complet et cours prévus →</a></p>${groups.map(([n,title,start,end])=>`<details class="path-group" ${data.path.slice(start,end).some(id=>!p.read.includes(id))&&data.path.slice(0,start).every(id=>p.read.includes(id))?'open':''}><summary><span>${n}</span> ${title}<small>${data.path.slice(start,end).filter(id=>p.read.includes(id)).length} / ${end-start} lus</small></summary><div class="lesson-list">${data.path.slice(start,end).map((id,i)=>lessonRow(data.lessons.find(l=>l.id===id),start+i,p)).join('')}</div></details>`).join('')}`;
 }

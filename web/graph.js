@@ -34,6 +34,8 @@ export function layoutGraph(lessons,edges){
  return map;
 }
 const labels={
+ chunking:'Découpage documentaire',hybride:'Recherche hybride',metriques:'Précision et rappel',injection:'Prompt injection',
+ reseaux:'Réseaux et DNS','http-tls':'HTTP et TLS',auth:'Identités et droits','contrat-outil':'Contrat des outils',reprises:'Reprises et files',contexte:'Budget de contexte',
  systeme:'Du modèle au système',llm:'Comprendre un LLM',workflow:'Workflow ou agent',harness:'Le rôle du harness',mcp:'Situer MCP',evaluation:'Évaluer une intégration',
  api:'API de modèle',materiel:'CPU, GPU, RAM et VRAM',memoire:'Mémoire et quantification',outils:'Appeler des outils','rag-doc':'Embeddings et RAG',graphe:'Graphe de données',
  confidentialite:'Données confidentielles','choix-modele':'Choisir un modèle',vecteurs:'Vecteurs et matrices',apprentissage:'Gradients et apprentissage',

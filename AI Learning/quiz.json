@@ -1,5 +1,5 @@
 {
-  "id": "fondations-v3",
+  "id": "fondations-v6",
   "title": "Fondations des modèles et des systèmes IA",
   "lessonIds": [
     "systeme",
@@ -25,7 +25,13 @@
     "docker",
     "extensions",
     "audit",
-    "observabilite"
+    "observabilite",
+    "reseaux",
+    "http-tls",
+    "auth",
+    "contrat-outil",
+    "reprises",
+    "contexte"
   ],
   "questions": [
     {
@@ -411,6 +417,262 @@
         "L’appel le plus court ne suffit pas si les deux résultats sont nécessaires."
       ],
       "lessonId": "observabilite"
+    },
+    {
+      "id": "q25",
+      "lessonId": "reseaux",
+      "prompt": "Dans un backend isolé dans un conteneur, que vise généralement localhost ?",
+      "options": [
+        "Le serveur DNS du réseau",
+        "L'espace réseau du backend lui-même",
+        "Tous les conteneurs du même hôte"
+      ],
+      "answer": 1,
+      "explanations": [
+        "Le DNS résout les noms ; localhost n'est pas son adresse par défaut.",
+        "Dans l'isolation réseau classique, la boucle locale appartient au conteneur appelant.",
+        "Partager un hôte physique ne fusionne pas automatiquement les espaces réseau."
+      ]
+    },
+    {
+      "id": "q26",
+      "lessonId": "http-tls",
+      "prompt": "Le navigateur utilise HTTPS, mais le reverse proxy contacte le modèle en HTTP. Quelle conclusion est correcte ?",
+      "options": [
+        "Tous les segments sont chiffrés grâce au cadenas",
+        "Le modèle devient inaccessible par définition",
+        "Le second segment n'est pas protégé par TLS"
+      ],
+      "answer": 2,
+      "explanations": [
+        "Le cadenas ne décrit pas toutes les connexions entre services derrière le frontal.",
+        "HTTP peut fonctionner ; la question est la protection de ce segment.",
+        "La protection doit être examinée connexion par connexion, selon les exigences du circuit."
+      ]
+    },
+    {
+      "id": "q27",
+      "lessonId": "auth",
+      "prompt": "Un compte technique peut chercher dans tous les documents. Où appliquer les droits du lecteur ?",
+      "options": [
+        "Avant de retourner les passages au modèle",
+        "Seulement dans le texte final de la réponse",
+        "Dans une consigne facultative au modèle"
+      ],
+      "answer": 0,
+      "explanations": [
+        "Filtrer selon une identité vérifiée avant la génération empêche les extraits interdits d'entrer dans ce traitement.",
+        "Le contenu protégé a déjà été exposé au traitement si on attend la réponse finale.",
+        "Une instruction ne remplace pas un contrôle d'accès appliqué par le service."
+      ]
+    },
+    {
+      "id": "q28",
+      "lessonId": "contrat-outil",
+      "prompt": "Des arguments respectent le schéma JSON d'un outil. Peut-on exécuter immédiatement l'action ?",
+      "options": [
+        "Oui, un JSON valide prouve les permissions",
+        "Non, il reste les droits et les règles métier à vérifier",
+        "Oui, si le modèle est suffisamment grand"
+      ],
+      "answer": 1,
+      "explanations": [
+        "Le schéma décrit une structure, pas l'autorité de la personne qui demande l'action.",
+        "Un identifiant bien formé peut viser une ressource interdite ou une opération incohérente.",
+        "Le nombre de paramètres ne remplace aucun contrôle logiciel d'autorisation."
+      ]
+    },
+    {
+      "id": "q29",
+      "lessonId": "reprises",
+      "prompt": "Après une réponse perdue lors d'une création, quelle stratégie limite les doublons ?",
+      "options": [
+        "Créer une nouvelle clé à chaque tentative",
+        "Réessayer sans limite jusqu'à recevoir HTTP 200",
+        "Réutiliser une clé stable prise en charge atomiquement par la cible"
+      ],
+      "answer": 2,
+      "explanations": [
+        "Une nouvelle clé représente une nouvelle intention pour le mécanisme de déduplication.",
+        "Une répétition aveugle peut multiplier l'effet et aggraver la panne.",
+        "La cible peut reconnaître l'opération logique et retourner son résultat déjà conservé."
+      ]
+    },
+    {
+      "id": "q30",
+      "lessonId": "contexte",
+      "prompt": "Une fenêtre combinée fictive vaut 16 000 tokens. Avec 2 000 de sortie et 1 000 de marge, quelle entrée cible reste disponible ?",
+      "options": [
+        "13 000 tokens",
+        "15 000 tokens",
+        "16 000 tokens"
+      ],
+      "answer": 0,
+      "explanations": [
+        "16 000 moins 2 000 moins 1 000 donne 13 000, dans les hypothèses de cet exercice.",
+        "15 000 ne laisse pas la place réservée à la sortie et à la marge.",
+        "Remplir toute la fenêtre avec l'entrée ignore les réserves prévues."
+      ]
+    },
+    {
+      "id": "q31",
+      "lessonId": "chunking",
+      "prompt": "Un passage contient une règle, mais son exception se trouve dans un passage non retrouvé. Que faut-il privilégier ?",
+      "options": [
+        "Augmenter seulement la température",
+        "Préserver une unité de sens avec sa provenance et vérifier la recherche",
+        "Supprimer les exceptions pour raccourcir"
+      ],
+      "answer": 1,
+      "explanations": [
+        "La température modifie le décodage, pas la présence de l’exception dans le contexte.",
+        "Le découpage et les tests doivent permettre de retrouver les conditions nécessaires à l’interprétation.",
+        "Supprimer une exception peut transformer une règle correcte en réponse trompeuse."
+      ]
+    },
+    {
+      "id": "q32",
+      "lessonId": "hybride",
+      "prompt": "Pourquoi utiliser une fusion par rangs entre recherche lexicale et vectorielle ?",
+      "options": [
+        "Pour éviter de supposer que leurs scores bruts ont la même échelle",
+        "Pour transformer le classement en preuve de vérité",
+        "Pour supprimer les contrôles d’accès"
+      ],
+      "answer": 0,
+      "explanations": [
+        "RRF combine des positions dans les listes, plutôt que d’additionner naïvement des scores hétérogènes.",
+        "Une position ou un score de fusion ne démontre ni l’exactitude ni la pertinence finale.",
+        "Les permissions sont indépendantes du classement et restent à appliquer."
+      ]
+    },
+    {
+      "id": "q33",
+      "lessonId": "metriques",
+      "prompt": "Un système détecte 12 des 20 urgences et émet 18 alertes. Quel est son rappel ?",
+      "options": [
+        "66,7 %",
+        "86 %",
+        "60 %"
+      ],
+      "answer": 2,
+      "explanations": [
+        "12/18 est la précision : la part d’alertes effectivement urgentes.",
+        "L’exactitude globale exige aussi le nombre de vrais négatifs et ne définit pas le rappel.",
+        "Le rappel rapporte les urgences trouvées aux urgences réelles : 12/20 = 60 %."
+      ]
+    },
+    {
+      "id": "q34",
+      "lessonId": "injection",
+      "prompt": "Un document demande à un agent de transmettre des données à l’extérieur. Quelle affirmation est juste ?",
+      "options": [
+        "Le document donne l’autorisation s’il est dans l’index",
+        "Les contrôles serveur doivent empêcher les actions hors du périmètre autorisé",
+        "Un JSON valide rend le transfert légitime"
+      ],
+      "answer": 1,
+      "explanations": [
+        "L’autorisation de lire un document n’accorde pas à son contenu le pouvoir de diriger l’application.",
+        "Le modèle peut être influencé ; permissions et destinations doivent être contrôlées indépendamment.",
+        "Une structure valide ne prouve ni l’autorité de la demande ni le droit d’envoyer les données."
+      ]
+    },
+    {
+      "id": "q35",
+      "lessonId": "reranking",
+      "prompt": "La preuve nécessaire est absente des 20 candidats envoyés au reranker. Que faire ?",
+      "options": [
+        "Augmenter uniquement son score",
+        "Revoir la recherche initiale ou élargir les candidats",
+        "Utiliser son score comme une preuve"
+      ],
+      "answer": 1,
+      "explanations": [
+        "Changer un score ne crée pas un passage absent.",
+        "Vérifier indexation et droits, puis améliorer la recherche ou élargir les candidats en mesurant le coût.",
+        "Un score de pertinence n’est ni un document ni une garantie de vérité."
+      ]
+    },
+    {
+      "id": "q36",
+      "lessonId": "reponse-sourcee",
+      "prompt": "La source confirme le délai de retour mais ne parle pas des frais de transport. Quelle réponse est fondée ?",
+      "options": [
+        "Les frais sont forcément remboursés",
+        "Aucun remboursement n’est possible",
+        "Citer le délai et signaler que les frais ne sont pas établis"
+      ],
+      "answer": 2,
+      "explanations": [
+        "Le remboursement est une affirmation sans preuve.",
+        "L’absence de preuve ne démontre pas une interdiction.",
+        "La réponse distingue ce qui est soutenu de ce qui reste inconnu."
+      ]
+    },
+    {
+      "id": "q37",
+      "lessonId": "jeu-reference",
+      "prompt": "Dix reformulations de chaque ticket sont disponibles. Comment séparer réglage et test ?",
+      "options": [
+        "Garder toutes les variantes d’un même ticket dans un seul ensemble",
+        "Répartir chaque variante aléatoirement",
+        "Régler le prompt sur toutes les réponses du test"
+      ],
+      "answer": 0,
+      "explanations": [
+        "La séparation par ticket limite la fuite de situations quasi identiques entre les ensembles.",
+        "Des variantes du même cas peuvent se retrouver des deux côtés et gonfler le score.",
+        "Le test n’est plus indépendant s’il sert à régler le système."
+      ]
+    },
+    {
+      "id": "q38",
+      "lessonId": "eval-rag",
+      "prompt": "Les preuves de référence sont A, B, C. Les quatre résultats sont A, B, B, D. Quel est le rappel documentaire ?",
+      "options": [
+        "3/4",
+        "2/3",
+        "3/3"
+      ],
+      "answer": 1,
+      "explanations": [
+        "Ce rapport ne compte pas correctement les preuves uniques et ne représente pas le rappel.",
+        "A et B sont retrouvées ; C manque. Le doublon B ne compte pas deux fois : 2/3.",
+        "Trois occurrences pertinentes ne représentent que deux preuves distinctes."
+      ]
+    },
+    {
+      "id": "q39",
+      "lessonId": "extraction",
+      "prompt": "Le montant attendu est 12990 centimes ; le JSON contient l’entier 1299, autorisé par le schéma. Que conclure ?",
+      "options": [
+        "La donnée est correcte puisque le schéma passe",
+        "Le JSON est nécessairement illisible",
+        "La structure peut être valide alors que le montant est faux"
+      ],
+      "answer": 2,
+      "explanations": [
+        "Le schéma ne connaît pas automatiquement le bon montant de chaque document.",
+        "Un entier erroné ne rend pas la syntaxe JSON invalide.",
+        "La comparaison à la preuve et les contrôles métier restent nécessaires."
+      ]
+    },
+    {
+      "id": "q40",
+      "lessonId": "validation-humaine",
+      "prompt": "Le destinataire d’un message change après son approbation. Que doit faire le workflow ?",
+      "options": [
+        "Envoyer puisque le texte est identique",
+        "Créer une nouvelle proposition à faire valider selon la politique",
+        "Considérer le silence comme une nouvelle approbation"
+      ],
+      "answer": 1,
+      "explanations": [
+        "Le destinataire fait partie de l’effet approuvé, même si le texte ne change pas.",
+        "L’accord porte sur une proposition précise ; une modification de cible exige une nouvelle décision selon la politique.",
+        "Une absence de réponse ne constitue pas un accord."
+      ]
     }
   ]
 }

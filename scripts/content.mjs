@@ -1,9 +1,23 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
+import {formulaHTML} from '../web/formulae.js';
+import {labHTML} from '../web/labs.js';
 
 export const escapeHtml = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+export function codeHTML(source,language='text'){
+ const supported=['json','python','javascript','bash','text'];
+ const lang=supported.includes(language)?language:'text';
+ // A small lexical accent for teaching snippets, not a language parser.
+ const tokens=/("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|#[^\n]*|\b(?:const|let|return|if|else|for|in|import|from|def|print|True|False|None|true|false|null)\b|\b\d+(?:\.\d+)?\b)/g;
+ let html='',last=0;
+ if(lang==='text')html=escapeHtml(source);else{
+  for(const match of source.matchAll(tokens)){html+=escapeHtml(source.slice(last,match.index));const token=match[0],kind=/^["']/.test(token)?'string':token.startsWith('#')?'comment':/^\d/.test(token)?'number':'keyword';html+=`<span class="syntax-${kind}">${escapeHtml(token)}</span>`;last=match.index+token.length;}
+  html+=escapeHtml(source.slice(last));
+ }
+ return `<div class="code-block"><div class="code-toolbar"><span>${lang}</span><button type="button" class="copy-code">Copier le code</button></div><pre tabindex="0"><code>${html}</code></pre></div>`;
+}
 export function renderMarkdown(source, lessons) {
-  const titles = new Map(lessons.map(l => [l.title, l.id]));
+  const titles = new Map(lessons.map(l => [escapeHtml(l.title), l.id]));
   function inline(text) {
     return escapeHtml(text)
       .replace(/!\[([^\]]*)\]\(\.\.\/Assets\/([a-zA-Z0-9_.-]+)\)/g, '<img class="lesson-image" alt="$1" src="./assets/$2" loading="lazy">')
@@ -16,7 +30,7 @@ export function renderMarkdown(source, lessons) {
       .replace(/`([^`]+)`/g, '<code>$1</code>')
       .replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, '<em>$1</em>');
   }
-  let output = [], paragraph = [], list = [], code = null, correction = null, calloutType = 'answer', calloutTitle = '', table = [];
+  let output = [], paragraph = [], list = [], code = null, codeLanguage='text', correction = null, calloutType = 'answer', calloutTitle = '', table = [];
   const closeCorrection = () => {
     const body=renderMarkdown(correction.join('\n'),lessons);
     output.push(calloutType==='answer'
@@ -39,8 +53,12 @@ export function renderMarkdown(source, lessons) {
     if(callout){flush();closeTable();correction=[];calloutType=callout[1];calloutTitle=callout[2];continue;}
     if(code===null&&line.trim().startsWith('|')){flush();table.push(line);continue;}
     closeTable();
-    if(line.startsWith('```')) { if(code !== null){output.push(`<pre><code>${escapeHtml(code.join('\n'))}</code></pre>`);code=null;}else{flush();code=[];}continue; }
+    if(line.startsWith('```')) { if(code !== null){output.push(codeHTML(code.join('\n'),codeLanguage));code=null;}else{flush();code=[];codeLanguage=line.slice(3).trim();}continue; }
     if(code!==null){code.push(line);continue;}
+    const extension=line.match(/^:::(formula|lab) ([a-z-]+)$/);
+    if(extension){flush();output.push(extension[1]==='formula'?formulaHTML(extension[2]):labHTML(extension[2]));continue;}
+    const figure=line.match(/^!\[([^\]]*)\]\(\.\.\/Assets\/([a-zA-Z0-9_.-]+)\)$/);
+    if(figure){flush();output.push(`<figure class="course-figure"><button type="button" class="figure-open" aria-label="Agrandir le schéma"><img class="lesson-image" alt="${escapeHtml(figure[1])}" src="./assets/${figure[2]}" loading="lazy"><span>Agrandir le schéma</span></button></figure>`);continue;}
     const heading=line.match(/^(#{1,3}) (.+)$/);
     if(heading){flush();if(heading[1].length!==1)output.push(`<h${heading[1].length}>${inline(heading[2])}</h${heading[1].length}>`);continue;}
     if(!line.trim()){flush();continue;}

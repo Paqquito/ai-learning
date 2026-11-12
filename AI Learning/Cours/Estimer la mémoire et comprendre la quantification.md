@@ -43,6 +43,10 @@ Le facteur deux correspond aux clés et aux valeurs. Les têtes KV ne sont pas t
 
 Exemple fictif : 32 couches, 8 têtes KV, dimension 128, 4 096 tokens, une séquence et 2 octets par valeur donnent 536 870 912 octets, soit 0,5 Gio. Quatre séquences indépendantes identiques donnent environ 2 Gio, hors surcoûts. Allonger les entrées peut donc faire échouer un modèle qui fonctionnait avec un prompt court.
 
+## Explorer dans le navigateur
+
+:::lab memory
+
 ## Exercice : préparer le budget
 
 Un modèle fictif de 8 milliards de paramètres en 4 bits est envisagé sur une carte de 12 Go. Écrire ce qui est connu, ce qui reste à mesurer et deux conditions pouvant augmenter la mémoire. Ne conclure ni « impossible » ni « garanti » avec le seul nombre de paramètres.

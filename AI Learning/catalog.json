@@ -161,11 +161,15 @@
       "title": "Comprendre un LLM",
       "file": "Cours/Comprendre un LLM.md",
       "domain": "models",
-      "minutes": 6,
+      "minutes": 13,
       "summary": "Tokens, génération, contexte : les bases pour intégrer un modèle.",
       "prerequisites": [
         "systeme"
-      ]
+      ],
+      "format": "Comprendre",
+      "question": "Que fait réellement un LLM quand il te répond ?",
+      "takeaway": "Les poids portent les régularités apprises, le contexte guide l’inférence, et l’application fournit les accès et les outils. Produire une réponse plausible ne prouve pas qu’un fait a été vérifié.",
+      "recall": "Explique avec tes mots la différence entre poids, contexte et outil. Ajouter un exemple au prompt change-t-il les poids ?"
     },
     {
       "id": "workflow",
@@ -288,13 +292,17 @@
       "title": "Déployer une IA avec des données confidentielles",
       "file": "Cours/Déployer une IA avec des données confidentielles.md",
       "domain": "security",
-      "minutes": 12,
+      "minutes": 16,
       "summary": "Tracer les flux, les droits, les journaux et les outils au-delà du seul hébergement du modèle.",
       "prerequisites": [
         "api",
         "outils",
         "rag-doc"
-      ]
+      ],
+      "format": "Concevoir",
+      "question": "Si le modèle est interne, les données le sont-elles forcément aussi ?",
+      "takeaway": "Inspecter chaque échange : navigateur, backend, index, embeddings, modèle, outils, traces et sauvegardes. Vérifier les destinataires et les droits ; TLS ne remplace pas l’autorisation.",
+      "recall": "Reconstitue le circuit d’un RAG interne. Cite deux sorties possibles de données autres que l’appel au modèle."
     },
     {
       "id": "choix-modele",
@@ -314,11 +322,15 @@
       "title": "Vecteurs matrices et similarité",
       "file": "Cours/Vecteurs matrices et similarité.md",
       "domain": "maths",
-      "minutes": 10,
+      "minutes": 16,
       "summary": "Lire les dimensions, calculer un produit matriciel et interpréter la similarité cosinus.",
       "prerequisites": [
         "llm"
-      ]
+      ],
+      "format": "Calculer et manipuler",
+      "question": "Pourquoi deux vecteurs de longueurs différentes peuvent-ils avoir une similarité de 1 ?",
+      "takeaway": "Les vecteurs représentent, les matrices transforment, le cosinus compare les directions de vecteurs non nuls. Vérifier les dimensions et l’origine des représentations avant de comparer.",
+      "recall": "Explique pourquoi multiplier un vecteur non nul par un nombre positif ne change pas son cosinus avec un autre vecteur."
     },
     {
       "id": "apprentissage",
@@ -428,6 +440,236 @@
         "outils",
         "confidentialite"
       ]
+    },
+    {
+      "id": "reseaux",
+      "title": "Réseaux : IP, ports, DNS et routage",
+      "file": "Cours/Reseaux IP ports DNS et routage.md",
+      "domain": "software",
+      "minutes": 14,
+      "summary": "Suivre une connexion jusqu'à un service IA et distinguer résolution, routage et port d'écoute.",
+      "prerequisites": [
+        "api",
+        "docker"
+      ]
+    },
+    {
+      "id": "http-tls",
+      "title": "HTTP, TLS, proxy et reverse proxy",
+      "file": "Cours/HTTP TLS proxy et reverse proxy.md",
+      "domain": "software",
+      "minutes": 14,
+      "summary": "Lire les échanges HTTP, localiser la terminaison TLS et comprendre le rôle des intermédiaires.",
+      "prerequisites": [
+        "reseaux"
+      ]
+    },
+    {
+      "id": "auth",
+      "title": "Authentification : clés, OAuth et comptes de service",
+      "file": "Cours/Authentification cles OAuth et comptes de service.md",
+      "domain": "software",
+      "minutes": 15,
+      "summary": "Séparer identité et permissions, puis choisir comment une application accède à un service pour un utilisateur.",
+      "prerequisites": [
+        "http-tls",
+        "confidentialite"
+      ]
+    },
+    {
+      "id": "contrat-outil",
+      "title": "Concevoir un contrat d'outil et un schéma JSON",
+      "file": "Cours/Contrat outil et schema JSON.md",
+      "domain": "agents",
+      "minutes": 15,
+      "summary": "Transformer une proposition du modèle en entrée contrôlée, sans confondre format valide et action autorisée.",
+      "prerequisites": [
+        "outils",
+        "auth"
+      ]
+    },
+    {
+      "id": "reprises",
+      "title": "Files de messages, reprises et idempotence",
+      "file": "Cours/Files de messages reprises et idempotence.md",
+      "domain": "software",
+      "minutes": 16,
+      "summary": "Reprendre un traitement après une panne sans perdre une demande ni dupliquer une action métier.",
+      "prerequisites": [
+        "http-tls",
+        "harness"
+      ]
+    },
+    {
+      "id": "contexte",
+      "title": "Gestion du contexte et budgets de tokens",
+      "file": "Cours/Gestion du contexte et budgets de tokens.md",
+      "domain": "agents",
+      "minutes": 15,
+      "summary": "Choisir ce que le modèle reçoit, réserver la sortie et éviter de perdre les contraintes en résumant l'historique.",
+      "prerequisites": [
+        "llm",
+        "memoire",
+        "rag-doc"
+      ]
+    },
+    {
+      "id": "chunking",
+      "title": "Découpage de documents et métadonnées",
+      "file": "Cours/Decoupage de documents et metadonnees.md",
+      "domain": "rag",
+      "minutes": 14,
+      "summary": "Préserver le sens, la provenance et les droits dans chaque passage indexé.",
+      "prerequisites": [
+        "rag-doc",
+        "contexte"
+      ],
+      "format": "Concevoir",
+      "question": "Comment retrouver une règle sans perdre son exception ?",
+      "takeaway": "Un passage doit rester interprétable et conserver sa source, sa version et ses droits. Le meilleur découpage se choisit par des tests sur des questions représentatives.",
+      "recall": "Décris le parcours d’une règle et de son exception, du document source à la citation. Quelles métadonnées doivent rester associées ?"
+    },
+    {
+      "id": "hybride",
+      "title": "Recherche lexicale, BM25 et recherche hybride",
+      "file": "Cours/Recherche lexicale BM25 et hybride.md",
+      "domain": "rag",
+      "minutes": 15,
+      "summary": "Combiner mots exacts et proximité sémantique, puis diagnostiquer les résultats.",
+      "prerequisites": [
+        "chunking",
+        "vecteurs"
+      ],
+      "format": "Comprendre un mécanisme",
+      "question": "Comment retrouver à la fois un code exact et une question reformulée ?",
+      "takeaway": "La recherche lexicale exploite les termes ; la vectorielle compare des représentations. La fusion par rangs combine des listes sans assimiler leurs scores bruts. Les droits et la qualité restent à vérifier.",
+      "recall": "Explique quand la recherche lexicale aide davantage que la vectorielle et pourquoi un score de fusion n’est pas une probabilité de vérité."
+    },
+    {
+      "id": "metriques",
+      "title": "Matrice de confusion, précision, rappel et F1",
+      "file": "Cours/Matrice de confusion precision rappel F1.md",
+      "domain": "eval",
+      "minutes": 15,
+      "summary": "Lire les erreurs d’un classificateur et choisir des critères adaptés au métier.",
+      "prerequisites": [
+        "evaluation"
+      ],
+      "format": "Calculer et décider",
+      "question": "Un système correct dans 86 % des cas peut-il manquer 40 % des urgences ?",
+      "takeaway": "La précision mesure la part d’alertes justes, le rappel la part de positifs retrouvés. L’exactitude globale peut masquer une classe minoritaire. Le choix dépend des erreurs et de leur coût.",
+      "recall": "Explique la différence entre précision et rappel avec l’exemple des tickets urgents. Quelle erreur augmente quand le rappel baisse ?"
+    },
+    {
+      "id": "injection",
+      "title": "Prompt injection directe et indirecte",
+      "file": "Cours/Prompt injection directe et indirecte.md",
+      "domain": "security",
+      "minutes": 15,
+      "summary": "Séparer données et autorité, limiter les actions et tester les effets réels.",
+      "prerequisites": [
+        "confidentialite",
+        "contrat-outil"
+      ],
+      "format": "Concevoir",
+      "question": "Un document peut-il donner des ordres à ton agent ?",
+      "takeaway": "Une donnée documentaire ne peut pas accorder une permission. Réduire les outils et vérifier côté serveur identité, ressource, action et destination. Observer les effets réels, pas seulement la réponse finale.",
+      "recall": "Un ticket demande au modèle d’envoyer son contenu ailleurs. Où placer les contrôles et que vérifier dans les traces ?"
+    },
+    {
+      "id": "reranking",
+      "title": "Reranking et sélection des passages",
+      "file": "Cours/Reranking et selection des passages.md",
+      "domain": "rag",
+      "minutes": 15,
+      "prerequisites": [
+        "hybride",
+        "contexte"
+      ],
+      "format": "Composer le contexte",
+      "question": "Pourquoi un bon reranker ne peut-il pas sauver une preuve absente ?",
+      "summary": "Comparer recherche, reclassement et sélection sous budget.",
+      "takeaway": "Le reranker ordonne les candidats reçus. La sélection doit préserver preuves, exceptions, versions et droits dans le budget disponible.",
+      "recall": "Explique la différence entre preuve absente des candidats, preuve mal classée et preuve perdue à la sélection."
+    },
+    {
+      "id": "reponse-sourcee",
+      "title": "Construire une réponse sourcée et une abstention",
+      "file": "Cours/Reponse sourcee et abstention.md",
+      "domain": "rag",
+      "minutes": 15,
+      "prerequisites": [
+        "reranking"
+      ],
+      "format": "Justifier une réponse",
+      "question": "Quand une citation réelle accompagne-t-elle une réponse fausse ?",
+      "summary": "Relier affirmations et preuves, puis décider quand répondre ou s’abstenir.",
+      "takeaway": "Une citation doit soutenir la portée exacte de l’affirmation. Répondre partiellement ou s’abstenir lorsque les preuves ne permettent pas de conclure.",
+      "recall": "Donne un exemple de citation valide mais insuffisante. Distingue clarification, réponse partielle et abstention."
+    },
+    {
+      "id": "jeu-reference",
+      "title": "Jeux de référence et critères d'acceptation",
+      "file": "Cours/Jeux de reference et criteres acceptation.md",
+      "domain": "eval",
+      "minutes": 16,
+      "prerequisites": [
+        "evaluation",
+        "metriques"
+      ],
+      "format": "Préparer une évaluation",
+      "question": "Comment savoir si une amélioration réussit aussi sur des cas inconnus ?",
+      "summary": "Construire des cas vérifiables et protéger l’indépendance du test.",
+      "takeaway": "Fixer les critères avant la comparaison, annoter preuves et comportements, séparer réglage et test par situations indépendantes.",
+      "recall": "Décris un cas de référence et explique pourquoi les reformulations d’un même ticket doivent rester dans le même ensemble."
+    },
+    {
+      "id": "eval-rag",
+      "title": "Évaluer séparément retrieval et génération",
+      "file": "Cours/Evaluer retrieval et generation.md",
+      "domain": "rag",
+      "minutes": 16,
+      "prerequisites": [
+        "jeu-reference",
+        "reponse-sourcee"
+      ],
+      "format": "Diagnostiquer",
+      "question": "La mauvaise réponse vient-elle de la recherche ou du générateur ?",
+      "summary": "Mesurer les preuves retrouvées et comparer avec un contexte de référence.",
+      "takeaway": "Vérifier corpus, recherche, sélection puis génération. Un contexte de référence aide à localiser l’échec ; le score global ne suffit pas.",
+      "recall": "Calcule un rappel documentaire simple et explique ce que révèle une comparaison entre contexte retrouvé et contexte de référence."
+    },
+    {
+      "id": "extraction",
+      "title": "Évaluer extraction et sorties structurées",
+      "file": "Cours/Evaluer extraction et sorties structurees.md",
+      "domain": "eval",
+      "minutes": 16,
+      "prerequisites": [
+        "contrat-outil",
+        "jeu-reference"
+      ],
+      "format": "Vérifier une donnée",
+      "question": "Un JSON valide suffit-il pour automatiser une commande ?",
+      "summary": "Contrôler syntaxe, schéma et exactitude des valeurs avant utilisation.",
+      "takeaway": "Valider la forme ne prouve pas le contenu. Définir les conventions d’absence et de normalisation, puis mesurer par champ et par document.",
+      "recall": "Explique pourquoi 1299 centimes peuvent satisfaire un schéma tout en étant faux. Comment mesurer les dates inventées ?"
+    },
+    {
+      "id": "validation-humaine",
+      "title": "Validation humaine et reprise d'une exécution",
+      "file": "Cours/Validation humaine et reprise execution.md",
+      "domain": "agents",
+      "minutes": 17,
+      "prerequisites": [
+        "reprises",
+        "contrat-outil"
+      ],
+      "format": "Encadrer une action",
+      "question": "Que reste-t-il de l’accord humain quand la proposition change ?",
+      "summary": "Lier un accord à une proposition précise et reprendre sans doublons.",
+      "takeaway": "Persister la proposition approuvée, revérifier droits et version à la reprise et rendre l’effet métier idempotent ou réconciliable.",
+      "recall": "Une panne survient après une action distante, avant le succès local : comment reprendre sans doublon et sans élargir l’accord humain ?"
     }
   ],
   "path": [
@@ -454,6 +696,22 @@
     "docker",
     "extensions",
     "audit",
-    "observabilite"
+    "observabilite",
+    "reseaux",
+    "http-tls",
+    "auth",
+    "contrat-outil",
+    "reprises",
+    "contexte",
+    "chunking",
+    "hybride",
+    "metriques",
+    "injection",
+    "reranking",
+    "reponse-sourcee",
+    "jeu-reference",
+    "eval-rag",
+    "extraction",
+    "validation-humaine"
   ]
 }

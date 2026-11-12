@@ -47,6 +47,10 @@ Un budget porte sur les tours, mais aussi sur le nombre d'appels, le temps et le
 
 Une fonction locale peut appeler directement l'API de tickets. Un serveur MCP peut exposer une interface réutilisable à plusieurs applications. Dans les deux cas, le harness conserve ses responsabilités de contexte, de contrôle et de traces. MCP n'ajoute pas automatiquement la capacité d'appeler correctement des outils à un modèle qui n'a pas été évalué pour cela.
 
+## Explorer dans le navigateur
+
+:::lab tools
+
 ## Exercice : la proposition dangereuse
 
 Un utilisateur autorisé à lire demande un résumé. Le modèle propose `supprimer_ticket` pour « nettoyer les doublons ». Écrire la décision de l'intégration et le résultat envoyé au modèle. Puis imaginer un appel de lecture qui tourne en boucle.

@@ -3,6 +3,7 @@ import * as baseViews from './views.js';
 import * as learningViews from './learning-views.js';
 const views={...baseViews,...learningViews};
 import {mountGraph} from './graph.js';
+import {mountReading,cleanupReading,reviewQueue} from './reading.js';
 
 const main=document.querySelector('main'),toast=document.querySelector('#toast');
 let data,progress=emptyProgress(),toastTimer;
@@ -16,6 +17,7 @@ function render(){
  const nav=page==='learn'?'curriculum':page;
  const routeKey=page+'/'+(id||'');
  if(page==='learn'&&main.dataset.route===routeKey&&section){jumpTo(section);return;}
+ cleanupReading();delete main.dataset.readingAlign;delete main.dataset.readingSize;
  main.dataset.route=routeKey;
  document.querySelectorAll('[data-nav]').forEach(a=>{if(a.dataset.nav===nav)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
  const menu=document.querySelector('#menu-toggle');
@@ -35,8 +37,12 @@ function render(){
  if(page==='graph')mountGraph(data,id);
  if(page==='curriculum'&&id){const group=document.getElementById('domain-'+id);if(group){group.open=true;group.scrollIntoView();}}
  if(page==='home'){const list=main.querySelector('.two-columns .lesson-list');if(list)list.outerHTML=views.pathSections(data,progress);}
+ if(page==='learn')mountReading(main,data,data.lessons.find(l=>l.id===id),progress,save,notify);
+ if(['home','practice','progress'].includes(page)){
+  const queue=reviewQueue(data,progress),intro=main.querySelector('.page-intro');
+  if(intro)intro.insertAdjacentHTML('afterend',queue);else main.insertAdjacentHTML('afterbegin',queue);
+ }
  if(page==='learn'&&section)jumpTo(section);
- on('justify-text','change',e=>main.querySelector('.prose')?.classList.toggle('justified',e.target.checked));
  const filter=()=>{document.querySelector('#library-results').innerHTML=views.libraryResults(data,progress,document.querySelector('#search').value,document.querySelector('#domain-filter').value);};
  on('search','input',filter);on('domain-filter','change',filter);
  on('mark-read','click',e=>{const key=e.currentTarget.dataset.id;progress.read=progress.read.includes(key)?progress.read.filter(x=>x!==key):[...progress.read,key];save();e.currentTarget.textContent=progress.read.includes(key)?'Retirer la marque « lu »':'Marquer comme lu';notify(progress.read.includes(key)?'Lecture enregistrée. Passe à la pratique pour vérifier ta compréhension.':'Marque de lecture retirée.');});
@@ -64,7 +70,7 @@ function bindProgress(){
  on('export-progress','click',()=>download('ai-learning-progression.json',progress));
  on('import-progress','change',async e=>{
   const file=e.target.files[0];if(!file)return;
-  try{if(file.size>200000)throw new Error('Fichier trop volumineux (200 Ko maximum).');const next=validateProgress(JSON.parse(await file.text()),data.lessons.map(l=>l.id),data.quiz.questions.length);if(!confirm('Remplacer la progression de ce navigateur par ce fichier ? Exporte d’abord tes résultats si tu veux les conserver.'))return;progress=next;const saved=save();render();if(saved)notify('Progression importée.');}
+  try{if(file.size>1000000)throw new Error('Fichier trop volumineux (1 Mo maximum).');const next=validateProgress(JSON.parse(await file.text()),data.lessons.map(l=>l.id),data.quiz.questions.length);if(!confirm('Remplacer la progression de ce navigateur par ce fichier ? Exporte d’abord tes résultats si tu veux les conserver.'))return;progress=next;const saved=save();render();if(saved)notify('Progression importée.');}
   catch(err){notify(`Import impossible : ${err.message}`);}finally{e.target.value='';}
  });
 }

@@ -1,5 +1,11 @@
 /* Reading, wayfinding and knowledge graph: shared with every course. */
 .mobile-menu{display:none}
+.reading-key{display:flex;flex-wrap:wrap;gap:8px;margin:-12px 0 28px;font-size:11px}
+.reading-key span{padding:5px 10px;border-radius:4px;border:1px solid currentColor}
+.key-essential{color:#245b48;background:#e7f0df}.key-example{color:#285b82;background:#e6eff8}.key-warning{color:#99502b;background:#fbecdf}.key-method{color:#654681;background:#f0eaf7}
+.prose .callout-abstract{background:#e7f0df;border-left-width:6px}.prose .callout-abstract>p:not(.callout-title){font-weight:600;color:#244937}
+.prose .callout-example{background:#e6eff8;border-color:#285b82}.prose .callout-example .callout-title{color:#285b82}
+.prose .callout-tip{background:#f0eaf7;border-color:#654681}.prose .callout-tip .callout-title{color:#654681}
 .breadcrumbs{display:flex;flex-wrap:wrap;gap:8px;color:var(--muted);font-size:12px;margin-bottom:24px}
 .lesson-intro{max-width:940px}.lesson-intro h1{font-size:clamp(30px,3.8vw,48px)}
 .lesson-meta{display:flex;flex-wrap:wrap;gap:12px;font-size:12px;color:var(--green)}
@@ -14,7 +20,9 @@
 .prose h2.section-exercise{background:var(--green);color:#fff;border:0;border-radius:8px;padding:18px}.section-exercise .section-number{color:var(--leaf)}
 .prose h2.section-sources{font-size:18px}.prose h3{margin:24px 0 14px;font-size:18px}
 .prose strong{font-weight:700}.prose p{margin-bottom:20px}.prose em{font-family:Georgia,serif;font-size:1.08em}
-.prose.justified>p{ text-align:justify;hyphens:auto }
+main p,.prose li,.correction li{text-align:justify;hyphens:auto}
+main .eyebrow,.callout-title{text-align:left}
+.callout-formula>p:not(.callout-title){text-align:center}
 .lesson-toc{position:sticky;top:24px;max-height:calc(100vh - 48px);overflow:auto;background:transparent;border-left:1px solid var(--line);border-radius:0;padding:0 0 0 20px}
 .lesson-toc nav a{display:flex;gap:10px;padding:8px 0;font-size:12px;line-height:1.5;text-decoration:none;color:var(--muted)}
 .lesson-toc nav a:hover{color:var(--green);text-decoration:underline}.lesson-toc nav span{font-variant-numeric:tabular-nums;color:var(--accent)}
@@ -43,6 +51,6 @@
 .graph-detail{margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:32px}.graph-detail>p,.graph-detail>h2,.graph-detail>a{grid-column:1/-1;margin-bottom:0}
 .connection-links{display:flex;flex-wrap:wrap;gap:8px}.connection-links a{font-size:12px;background:var(--soft);padding:5px 9px;border-radius:4px}.graph-legend{flex-wrap:wrap;padding:0 16px}.graph-canvas>.hint{padding:0 16px 12px}
 @media(max-width:1100px){.reading-layout{grid-template-columns:minmax(0,1fr)}.lesson-toc{position:static;max-height:none;order:-1;border:1px solid var(--line);border-radius:8px;padding:18px}.lesson-toc nav{display:grid;grid-template-columns:1fr 1fr;gap:0 20px}}
-@media(max-width:700px){.route-guide{grid-template-columns:1fr;gap:16px}.reading-controls{align-items:start;flex-direction:column}.prose{font-size:15px}.prose.justified>p{text-align:left}.lesson-toc nav{grid-template-columns:1fr}.lesson-toc nav a{font-size:13px}.callout{padding:18px}.prose h2{font-size:21px}.prose th,.prose td{padding:10px;min-width:100px}.curriculum-domain summary{flex-wrap:wrap;gap:8px}.curriculum-domain summary strong{flex-basis:70%;font-size:16px}.curriculum-domain summary>span:last-child{margin-left:30px}.curriculum-domain ul{padding-left:8px}.curriculum-domain li{font-size:13px}.graph-detail{grid-template-columns:1fr}.graph-canvas svg{min-height:300px}.lesson-meta{gap:8px}}
+@media(max-width:700px){.route-guide{grid-template-columns:1fr;gap:16px}.reading-controls{align-items:start;flex-direction:column}.prose{font-size:15px}.lesson-toc nav{grid-template-columns:1fr}.lesson-toc nav a{font-size:13px}.callout{padding:18px}.prose h2{font-size:21px}.prose th,.prose td{padding:10px;min-width:100px}.curriculum-domain summary{flex-wrap:wrap;gap:8px}.curriculum-domain summary strong{flex-basis:70%;font-size:16px}.curriculum-domain summary>span:last-child{margin-left:30px}.curriculum-domain ul{padding-left:8px}.curriculum-domain li{font-size:13px}.graph-detail{grid-template-columns:1fr}.graph-canvas svg{min-height:300px}.lesson-meta{gap:8px}}
 @media print{.sidebar,.topbar,.reading-controls,.lesson-toc,.lesson-actions,footer{display:none}.workspace{margin:0}main{padding:0}.prose{max-width:none}.reading-layout{display:block}.callout,.table-scroll,.lesson-image{break-inside:avoid}}
 @media(max-width:700px){.mobile-menu{display:flex;margin-top:16px;width:100%;justify-content:space-between}.mobile-menu::after{content:'☰'}.mobile-menu[aria-expanded=true]::after{content:'×'}.sidebar nav{display:none;margin-top:12px;overflow:visible;padding:0}.sidebar.menu-open nav{display:grid;grid-template-columns:1fr 1fr}.sidebar nav a{white-space:normal;line-height:1.4}.sidebar nav a span{flex-shrink:0}}

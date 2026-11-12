@@ -4,6 +4,9 @@
 
 Tracer les données au-delà du seul modèle, repérer les services susceptibles de recevoir du contenu et proposer un périmètre de déploiement. Prérequis : [[Comprendre une API de modèle]], [[Appeler des outils avec un modèle]] et [[Embeddings et RAG documentaire]].
 
+> [!abstract] À retenir
+> La confidentialité porte sur le circuit complet : entrées, recherche, modèle, outils, traces et sauvegardes. Un modèle interne ne suffit pas si une autre brique transmet le contenu hors du périmètre autorisé.
+
 ## « Local » doit désigner un périmètre
 
 Une application installée sur un ordinateur peut appeler un modèle distant. Un modèle hébergé dans l'entreprise peut être entouré d'un outil d'analyse externe qui reçoit les prompts. Il faut donc définir la frontière autorisée : poste, réseau interne, environnement hébergé dédié ou service externe approuvé. L'étiquette « local » ne remplace pas ce travail.
@@ -15,6 +18,19 @@ Pour chaque composant, noter l'entrée, la sortie, le lieu d'exécution, la pers
 Supposons que les données d'une entreprise fictive doivent rester dans son réseau autorisé. Le navigateur appelle un backend interne. Celui-ci contrôle l'identité et les droits, cherche des passages dans un index interne, appelle un service d'inférence autorisé, puis restitue une réponse. Les traces restent dans le même périmètre et évitent de recopier les messages complets par défaut.
 
 Cette description n'est ni un constat sur l'architecture de DS, ni une validation de ses règles. Dans un projet réel, les responsables concernés doivent préciser les services approuvés et le sens exact de « rien ne sort ». Le site pédagogique personnel ne sert pas à déposer des documents d'entreprise.
+
+![Architecture fictive : navigateur, backend, recherche et inférence restent dans le périmètre autorisé ; les sorties externes sont bloquées et les traces sont conservées à l'intérieur.](../Assets/confidentialite.svg)
+
+| Échange | Donnée transportée | Contrôle à expliquer |
+| --- | --- | --- |
+| Navigateur → backend | Demande et identité | Authentification, transport, session |
+| Backend → recherche | Requête et périmètre autorisé | Droits par utilisateur et document |
+| Recherche → inférence | Passages sélectionnés | Droits, minimisation et provenance |
+| Inférence → application | Réponse proposée | Validation et citations |
+| Application → traces | Métadonnées nécessaires | Accès, rétention et contenu minimal |
+
+> [!example] Service de modèle imposé
+> Tu peux construire l'authentification, les outils, les contrôles et l'évaluation autour d'une API interne sans administrer son serveur d'inférence. Il faut toutefois clarifier auprès de son exploitant : modèles accessibles, limites, journaux, disponibilité et lieux de traitement. Ces informations ne se déduisent pas du seul nom du modèle.
 
 ## Trois protections différentes
 
@@ -30,7 +46,20 @@ Un texte récupéré peut demander au modèle d'ignorer sa mission, de révéler
 
 Le système doit séparer instructions de l'application et contenu documentaire, limiter les outils, contrôler les droits côté serveur et restreindre les destinations réseau. Ces mesures réduisent le risque sans promettre qu'un prompt suffit à rendre tout comportement sûr. Une validation humaine doit présenter l'action et ses conséquences avant une écriture importante.
 
-## Exercice : trouver la fuite dans le circuit
+> [!warning] Chiffrement et destination
+> TLS protège un trajet. Il ne transforme pas une destination externe en destination autorisée et ne décide pas de sa politique de conservation.
+
+> [!tip] Méthode de revue
+> Pour chaque flèche, nommer les données, le destinataire, l'identité, la permission et la persistance. Vérifier par des tests les chemins normaux, les erreurs et les diagnostics.
+
+## Exercice guidé : un modèle interne suffit-il ?
+
+Le générateur est interne, mais l'interface charge un module qui envoie les conversations à un outil de mesure externe. Où est la sortie et quelle preuve chercher ?
+
+> [!answer]- Correction
+> La sortie se trouve dans la télémétrie de l'interface. Vérifier les destinations et contenus des requêtes réseau et la configuration de diagnostic. Désactiver le transfert ou le remplacer par un service interne approuvé dans ce scénario. L'emplacement du générateur ne protège pas ce chemin.
+
+## Exercice autonome : trouver la fuite dans le circuit
 
 Une application fictive utilise un modèle interne et un index interne, mais envoie les prompts à un service externe de diagnostic. On lui ajoute un connecteur qui transmet les extraits à une API publique d'embeddings. Identifier les deux sorties et proposer une variante respectant la contrainte de l'exercice.
 

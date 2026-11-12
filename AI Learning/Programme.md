@@ -1,6 +1,6 @@
 # Programme de la base IA
 
-193 cours inventoriés : 24 introductions disponibles et 169 cours à rédiger. Mis à jour le 2026-11-12.
+193 cours inventoriés : 40 introductions disponibles et 153 cours à rédiger. Mis à jour le 2026-11-12.
 
 Intégrer, puis auditer, puis adapter. Les cours disponibles sont introductifs ; ce programme reste évolutif.
 
@@ -41,16 +41,16 @@ Ce catalogue vise une couverture large des métiers Applied AI, Forward Deployed
 
 - Disponible (introduction) : [[Comprendre une API de modèle]]
 - Disponible (introduction) : [[Docker images conteneurs et services IA]]
+- Disponible (introduction) : [[Réseaux : IP, ports, DNS et routage]]
+- Disponible (introduction) : [[HTTP, TLS, proxy et reverse proxy]]
+- Disponible (introduction) : [[Authentification : clés, OAuth et comptes de service]]
+- Disponible (introduction) : [[Files de messages, reprises et idempotence]]
 - À rédiger : Python pratique pour lire et vérifier du code généré
 - À rédiger : Environnements Python, dépendances et reproductibilité
 - À rédiger : Tests, Git et revue de code assistée
 - À rédiger : Linux : processus, fichiers, droits et services
-- À rédiger : Réseaux : IP, ports, DNS et routage
-- À rédiger : HTTP, TLS, proxy et reverse proxy
-- À rédiger : Authentification : clés, OAuth et comptes de service
 - À rédiger : Asynchronisme, streaming et annulation
 - À rédiger : SQL et conception d'une API métier
-- À rédiger : Files de messages, reprises et idempotence
 
 ## Données
 
@@ -159,13 +159,13 @@ Ce catalogue vise une couverture large des métiers Applied AI, Forward Deployed
 
 - Disponible (introduction) : [[Embeddings et RAG documentaire]]
 - Disponible (introduction) : [[Quand utiliser un graphe de données]]
-- À rédiger : Découpage de documents et métadonnées
-- À rédiger : Recherche lexicale, BM25 et recherche hybride
+- Disponible (introduction) : [[Découpage de documents et métadonnées]]
+- Disponible (introduction) : [[Recherche lexicale, BM25 et recherche hybride]]
+- Disponible (introduction) : [[Reranking et sélection des passages]]
+- Disponible (introduction) : [[Construire une réponse sourcée et une abstention]]
+- Disponible (introduction) : [[Évaluer séparément retrieval et génération]]
 - À rédiger : Index vectoriels et recherche approchée
-- À rédiger : Reranking et sélection des passages
-- À rédiger : Construire une réponse sourcée et une abstention
 - À rédiger : Contrôle d'accès dans la recherche documentaire
-- À rédiger : Évaluer séparément retrieval et génération
 - À rédiger : Knowledge graphs : entités, relations et requêtes
 - À rédiger : GraphRAG : parcours, synthèses et compromis
 - À rédiger : Recherche multimodale et documents complexes
@@ -178,9 +178,10 @@ Ce catalogue vise une couverture large des métiers Applied AI, Forward Deployed
 - Disponible (introduction) : [[Situer MCP]]
 - Disponible (introduction) : [[Appeler des outils avec un modèle]]
 - Disponible (introduction) : [[Distinguer outils MCP skills et plugins]]
-- À rédiger : Concevoir un contrat d'outil et un schéma JSON
+- Disponible (introduction) : [[Concevoir un contrat d'outil et un schéma JSON]]
+- Disponible (introduction) : [[Gestion du contexte et budgets de tokens]]
+- Disponible (introduction) : [[Validation humaine et reprise d'une exécution]]
 - À rédiger : Construire un harness minimal testable
-- À rédiger : Gestion du contexte et budgets de tokens
 - À rédiger : Mémoire de travail, mémoire persistante et provenance
 - À rédiger : Implémenter un serveur et un client MCP
 - À rédiger : Authentification et autorisations MCP
@@ -190,7 +191,6 @@ Ce catalogue vise une couverture large des métiers Applied AI, Forward Deployed
 - À rédiger : Isolation du code et sandbox d'exécution
 - À rédiger : Planification, réflexion et critères d'arrêt
 - À rédiger : Systèmes multi-agents et coordination
-- À rédiger : Validation humaine et reprise d'une exécution
 - À rédiger : Automatisation navigateur et ordinateur
 - À rédiger : Intégrer messagerie, tickets et outils métier
 - À rédiger : Workflows durables, planification et événements
@@ -199,9 +199,9 @@ Ce catalogue vise une couverture large des métiers Applied AI, Forward Deployed
 
 - Disponible (introduction) : [[Évaluer une intégration]]
 - Disponible (introduction) : [[Choisir un modèle par la mesure]]
-- À rédiger : Jeux de référence et critères d'acceptation
-- À rédiger : Matrice de confusion, précision, rappel et F1
-- À rédiger : Évaluer extraction et sorties structurées
+- Disponible (introduction) : [[Matrice de confusion, précision, rappel et F1]]
+- Disponible (introduction) : [[Jeux de référence et critères d'acceptation]]
+- Disponible (introduction) : [[Évaluer extraction et sorties structurées]]
 - À rédiger : Évaluer citations, factualité et abstention
 - À rédiger : LLM-as-a-judge : calibration et biais
 - À rédiger : Évaluer les outils et trajectoires d'un agent
@@ -227,8 +227,8 @@ Ce catalogue vise une couverture large des métiers Applied AI, Forward Deployed
 ## Sécurité et gouvernance
 
 - Disponible (introduction) : [[Déployer une IA avec des données confidentielles]]
+- Disponible (introduction) : [[Prompt injection directe et indirecte]]
 - À rédiger : Modèle de menace d'une application IA
-- À rédiger : Prompt injection directe et indirecte
 - À rédiger : Exfiltration, outils et contrôle des sorties réseau
 - À rédiger : Moindre privilège, RBAC et ABAC
 - À rédiger : Isolation des clients et cloisonnement des données

@@ -36,3 +36,28 @@ Les QCM et le suivi de progression sont disponibles dans l'application web. Les 
 - [[Distinguer outils MCP skills et plugins]]
 - [[Auditer un processus avant de proposer une IA]]
 - [[Observer et diagnostiquer une application IA]]
+
+## Fiabiliser une intégration
+
+- [[Réseaux : IP, ports, DNS et routage]]
+- [[HTTP, TLS, proxy et reverse proxy]]
+- [[Authentification : clés, OAuth et comptes de service]]
+- [[Concevoir un contrat d'outil et un schéma JSON]]
+- [[Files de messages, reprises et idempotence]]
+- [[Gestion du contexte et budgets de tokens]]
+
+## Construire un RAG et mesurer sa qualité
+
+- [[Découpage de documents et métadonnées]]
+- [[Recherche lexicale, BM25 et recherche hybride]]
+- [[Matrice de confusion, précision, rappel et F1]]
+- [[Prompt injection directe et indirecte]]
+
+## Valider et exploiter une intégration
+
+- [[Reranking et sélection des passages]]
+- [[Construire une réponse sourcée et une abstention]]
+- [[Jeux de référence et critères d'acceptation]]
+- [[Évaluer séparément retrieval et génération]]
+- [[Évaluer extraction et sorties structurées]]
+- [[Validation humaine et reprise d'une exécution]]

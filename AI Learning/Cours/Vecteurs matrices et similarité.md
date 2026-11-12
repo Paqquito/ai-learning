@@ -43,8 +43,7 @@ Prenons X = (2, 1). La matrice W contient deux lignes : (1, 3), puis (4, 0).
 | Première | (1, 4) | 2 × 1 + 1 × 4 | **6** |
 | Seconde | (3, 0) | 2 × 3 + 1 × 0 | **6** |
 
-> [!formula] Résultat de la transformation
-> XW = (6, 6)
+:::formula matrix
 
 Une couche peut ensuite ajouter un **biais** et appliquer une **fonction non linéaire**. Sans non-linéarités, empiler des transformations linéaires équivaut encore à une transformation linéaire.
 
@@ -54,12 +53,11 @@ Une couche peut ensuite ajouter un **biais** et appliquer une **fonction non lin
 
 Le **produit scalaire** additionne les produits des coordonnées correspondantes. La **norme euclidienne** mesure la longueur. Pour deux vecteurs non nuls, la similarité cosinus normalise le produit scalaire par leurs longueurs.
 
-> [!formula] Produit scalaire, norme et cosinus
-> u · v = u₁v₁ + … + uₙvₙ
->
-> ‖u‖ = √(u₁² + … + uₙ²)
->
-> cos(u, v) = (u · v) / (‖u‖ × ‖v‖)
+:::formula dot
+
+:::formula norm
+
+:::formula cosine
 
 *uᵢ* et *vᵢ* désignent la coordonnée numéro *i*. Le symbole ‖u‖ désigne la norme de *u*. La somme porte sur toutes les coordonnées.
 
@@ -71,6 +69,17 @@ Le **produit scalaire** additionne les produits des coordonnées correspondantes
 
 > [!warning] Un score ne prouve pas une vérité
 > Un cosinus élevé indique une proximité dans cet espace. Il ne garantit ni identité des textes, ni exactitude factuelle. Pour un vecteur nul, la formule est indéfinie : le logiciel doit traiter ce cas explicitement.
+
+## Manipuler les directions
+
+:::lab vectors
+
+## Exercice guidé : compléter le calcul
+
+Pour u = (1, 0) et v = (3, 0), le produit scalaire vaut 3. Complète : norme de u = … ; norme de v = … ; cosinus = … . Que devient le cosinus si v devient (6, 0) ?
+
+> [!answer]- Correction
+> Les normes valent 1 et 3. Le cosinus vaut 3 / (1 × 3) = **1**. Avec (6, 0), produit scalaire et norme de v doublent : le cosinus reste **1**. La direction est inchangée.
 
 ## Appliquer : diagnostiquer un index incompatible
 

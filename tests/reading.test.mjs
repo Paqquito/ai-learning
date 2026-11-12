@@ -4,10 +4,26 @@ import {fileURLToPath} from 'node:url';
 import {loadContent,renderMarkdown} from '../scripts/content.mjs';
 import {layoutGraph,graphEdges} from '../web/graph.js';
 import {lesson,curriculum} from '../web/learning-views.js';
-import {emptyProgress} from '../web/state.js';
+import {emptyProgress,validateProgress} from '../web/state.js';
+import {pathSections} from '../web/learning-views.js';
 import {caseView} from '../web/views.js';
 
 const data=await loadContent(fileURLToPath(new URL('..',import.meta.url)));
+
+test('Le nouveau lot est accessible dans le parcours et préserve les scores sur 24 questions',()=>{
+ const previous={...emptyProgress(),read:['llm'],attempts:[{score:20,total:24,date:'2026-11-12T12:00:00Z'}]};
+ assert.deepEqual(validateProgress(previous,data.path,data.quiz.questions.length),previous);
+ const route=pathSections(data,previous);
+ for(const l of data.lessons){
+  assert.ok(route.includes(`href="#learn/${l.id}"`),l.id);
+  assert.ok(data.quiz.questions.some(q=>q.lessonId===l.id),l.id);
+ }
+ for(const id of ['reseaux','http-tls','auth','contrat-outil','reprises','contexte']){
+  const l=data.lessons.find(l=>l.id===id);
+  assert.ok(l.html.includes('class="lesson-image"'),id);
+  for(const type of ['abstract','warning','tip'])assert.ok(l.html.includes('callout-'+type),id+' '+type);
+ }
+});
 
 test('Chaque exercice a son corrigé et chaque section sa destination de navigation',()=>{
  for(const l of data.lessons){
