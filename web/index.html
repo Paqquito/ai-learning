@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173f35">
+  <meta name="description" content="Une base de connaissances et un laboratoire pour comprendre et construire des systèmes d’intelligence artificielle.">
+  <title>AI Learning · Atlas</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23173f35'/%3E%3Cpath d='M15 45L32 16L49 45M23 34H41' stroke='%23cce4a2' stroke-width='5' fill='none'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Aller au contenu</a>
+  <aside class="sidebar">
+    <a class="brand" href="#home"><span class="brand-mark" aria-hidden="true">A<span>·</span></span><span>AI Learning<small>ATLAS & LABORATOIRE</small></span></a>
+    <p class="nav-label">TON ESPACE D’APPRENTISSAGE</p>
+    <nav aria-label="Navigation principale">
+      <a href="#home" data-nav="home"><span aria-hidden="true">⌂</span> Vue d’ensemble</a>
+      <a href="#graph" data-nav="graph"><span aria-hidden="true">◎</span> Graphe des savoirs</a>
+      <a href="#library" data-nav="library"><span aria-hidden="true">▤</span> Bibliothèque</a>
+      <a href="#practice" data-nav="practice"><span aria-hidden="true">✓</span> Entraînement</a>
+      <a href="#case" data-nav="case"><span aria-hidden="true">◇</span> Cas & laboratoire</a>
+      <a href="#progress" data-nav="progress"><span aria-hidden="true">↗</span> Progression</a>
+    </nav>
+    <div class="sidebar-bottom"><span class="status-dot"></span> Une base qui grandit avec toi<p>Comprendre. Construire. Évaluer.</p><small>VERSION 0.1 · PREMIER PARCOURS</small></div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar"><span>Le carnet d’un ingénieur IA</span><a href="#library" class="search-shortcut">Rechercher une notion <span aria-hidden="true">⌕</span></a></header>
+    <main id="main" tabindex="-1"><p class="loading" role="status">Chargement de ton atlas…</p></main>
+    <footer>AI Learning · Comprendre les systèmes, pas seulement les outils.<span>Contenus introductifs · sources datées</span></footer>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

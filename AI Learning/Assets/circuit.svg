@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="500" viewBox="0 0 960 500" role="img" aria-labelledby="title desc">
+<title id="title">Circuit d'une demande de support</title><desc id="desc">Dans l'environnement applicatif, la demande est préparée puis envoyée à un service de modèle autorisé. La proposition revient pour contrôle. Une validation humaine est requise avant de créer un ticket. Un échec revient en traitement manuel.</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#24705a" stroke-width="1.5"/></marker></defs>
+<rect width="960" height="500" rx="12" fill="#f5f5ee"/>
+<text x="32" y="40" font-family="sans-serif" font-size="17" fill="#53635d">ARCHITECTURE PÉDAGOGIQUE · LES DONNÉES ET LES CONTRÔLES</text>
+<rect x="24" y="65" width="605" height="405" rx="12" fill="none" stroke="#9baea2" stroke-dasharray="7 5"/>
+<text x="42" y="93" font-family="sans-serif" font-size="14" fill="#53635d">Environnement applicatif</text>
+<g fill="#fff" stroke="#b7c7ba"><rect x="45" y="120" width="200" height="72" rx="8"/><rect x="375" y="120" width="220" height="72" rx="8"/><rect x="375" y="272" width="220" height="72" rx="8"/><rect x="45" y="272" width="200" height="72" rx="8"/><rect x="45" y="390" width="200" height="54" rx="8"/></g>
+<rect x="710" y="120" width="218" height="92" rx="8" fill="#153e33"/>
+<rect x="710" y="390" width="218" height="54" rx="8" fill="#153e33"/>
+<g font-family="sans-serif" font-size="18" fill="#203c32" text-anchor="middle"><text x="145" y="151">Demande</text><text x="485" y="151">Préparer et filtrer</text><text x="485" y="303">Contrôler la sortie</text><text x="145" y="303">Validation humaine</text><text x="145" y="423">Action approuvée</text></g>
+<g font-family="sans-serif" font-size="13" fill="#53635d" text-anchor="middle"><text x="145" y="174">Texte synthétique</text><text x="485" y="174">Données strictement utiles</text><text x="485" y="326">Format + règles métier</text><text x="145" y="326">Corriger ou approuver</text></g>
+<g fill="#fff" font-family="sans-serif" text-anchor="middle"><text x="819" y="153" font-size="18">Service de modèle</text><text x="819" y="179" font-size="13">Local ou distant autorisé</text><text x="819" y="423" font-size="18">Créer le ticket</text></g>
+<g fill="none" stroke="#24705a" stroke-width="2" marker-end="url(#arrow)"><path d="M245 156H375"/><path d="M595 156H710"/><path d="M819 212V308H595"/><path d="M375 308H245"/><path d="M145 344V390"/><path d="M245 417H710"/></g>
+<g font-family="sans-serif" font-size="13" fill="#53635d"><text x="265" y="143">Entrée</text><text x="606" y="139">Prompt</text><text x="657" y="296">Proposition</text><text x="275" y="292">À vérifier</text><text x="350" y="405">Seulement après approbation</text><text x="710" y="345">Si échec : traitement manuel</text></g>
+</svg>
